@@ -1,0 +1,52 @@
+html {
+	margin:0;
+	padding:0;
+	height:100%; /* needed for container min-height */
+}
+body {
+	margin:0;
+	padding:0;
+	height:90%; /* needed for container min-height */
+}
+.notification {
+	position: absolute
+}
+#notifications {
+	z-index: 10000;
+	width: 500px;
+	margin-left: -250px;
+	left: 50%;
+	position: absolute;
+	top: 1px
+}
+#notifications .alert {
+	box-shadow: 0 0 1px 1px;
+	margin-bottom: 5px
+}
+#main {
+	height:auto !important; /* real browsers */
+	min-height:100%; /* real browsers */
+	width: 100%;
+	padding: 0px;
+}
+#resources_container {
+	margin: 2em 0em 2em 0em;
+}
+.site-header {
+	height: 92px;
+}
+#colophon {
+	/* position:absolute; */ /* This command is for useage inside the main-container */
+	width:100%;
+	bottom:0; /* stick to bottom */
+}
+.container {
+	width: 100%;
+}
+#content-wrapper {
+	margin: 14px 20px auto 20px;
+}
+.info_title {
+	font-size: 150%;
+	font-weight: bold;
+}

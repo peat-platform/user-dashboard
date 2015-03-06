@@ -1,0 +1,56 @@
+
+#editContainer .permInstance {
+    border: 2px solid;
+    border-radius: 10px;
+    margin: 5px;
+}
+#editContainer .permInstance div {
+    padding: 5px;
+}
+#editContainer .permInstance .headingType {
+    background-color: #81DAF5;
+    border-radius: 10px 10px 0px 0px;
+}
+#editContainer .permInstance .headingObject {
+    background-color: #58ACFA;
+    border-radius: 11px 11px 0px 0px;
+}
+#editContainer span.removeFromPerms{
+    float: right;
+    color: #FF0000;
+    cursor: hand;
+    cursor: pointer;
+}
+#editContainer hr {
+    margin: 3px;
+}
+label {
+    display: inline-block;
+    width: 5em;
+}
+#editContainer span.help{
+    display: inline-block;
+    cursor: hand;
+    cursor: pointer;
+    background-color: #81DAF5;
+    border-radius: 4px 4px 4px 4px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    color: white;
+    margin-left: 4px;
+}
+#editContainer span.loadTypeDetails{
+    cursor: hand;
+    cursor: pointer;
+    color: #0000ff;
+    font-size: 10px;
+}
+
+.row{margin-top: 30px}
+
+.sidebar{top:71px}
+
+#resources_container{
+    width:1070px;
+}

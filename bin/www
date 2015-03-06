@@ -1,0 +1,14 @@
+#!/usr/bin/env node
+var debug  = require('debug')('openi-admin-ui');
+var app    = require('../app');
+var http   = require('http');
+var m2node = require('m2node');
+
+
+
+
+m2node.run(
+   http.createServer(app), {
+      send_spec: 'tcp://127.0.0.1:49924',
+      recv_spec: 'tcp://127.0.0.1:49923'
+   });

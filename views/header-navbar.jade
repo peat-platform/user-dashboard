@@ -1,0 +1,44 @@
+#headergroup
+  .social-icons
+    a(href='http://www.mendeley.com/profiles/openi-project', target='_blank', title='OPENi Mendeley page')
+      img(src='/wp-content/themes/openi/images/mendeley.png', alt='Mendeley')
+    a(target='blank', href='http://www.youtube.com/openiict', title='OPENi Youtube Account')
+      img(src='/wp-content/themes/openi/images/youtube.png', alt='Youtube')
+    a(href='http://www.delicious.com/openi_ict', target='_blank', title='OPENi Delicious')
+      img(src='/wp-content/themes/openi/images/delicious.png', alt='Delicious')
+    a(target='blank', href='http://www.slideshare.net/openi_ict', title='OPENi Slideshare')
+      img(src='/wp-content/themes/openi/images/slideshare.png', alt='Slideshare')
+    a(href='http://www.linkedin.com/groups/OPENi-Integrating-Applications-Social-Media-4778498', target='_blank', title='OPENi Linkedin')
+      img(src='/wp-content/themes/openi/images/linkedin.png', alt='Linkedin')
+    a(href='https://www.facebook.com/ictopeni', target='_blank', title='OPENi Facebook page')
+      img(src='/wp-content/themes/openi/images/facebook.png', alt='Facebook')
+    a(target='blank', href='https://twitter.com/openi_ict', title='OPENi Twitter Feed')
+      img(src='/wp-content/themes/openi/images/twitter.png', alt='Twitter')
+    a(href='/rss', target='_blank', title='OPENi RSS Feed')
+      img(src='/wp-content/themes/openi/images/rss.png', alt='RSS Feed')
+  hgroup
+    h1.site-title
+      a(href='/user/', title='OPENi', rel='home') OPENi
+    // <h2 class="site-description"></h2>
+  nav#site-navigation.main-navigation(role='navigation')
+    h3.menu-toggle Menu
+    a.assistive-text(href='#content', title='Skip to content') Skip to content
+    .menu-version1-container
+      ul#menu-version1.nav-menu
+        li#menu-item-26.menu-item.menu-item-type-post_type.menu-item-object-page.current-menu-item.page_item.page-item-4.current_page_item.menu-item-26
+          a(href='/user/') #{user}'s Home
+        li#menu-item-211.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-211
+          a(href='/user/apps') My Apps
+        li#menu-item-21.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-21
+          a(href='/user/registerClient') Register Client
+        li#menu-item-22.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-21
+          a(href='/user/') ...
+        li#menu-item-25.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-23
+          a(id="btn-logout-nav", href='/#') Logout
+  // #site-navigation
+  .header-search
+    form#searchform(role='search', method='get', action='/user/search')
+      div
+        label.screen-reader-text(for='s') Search for:
+        input#s(type='text', value='', name='s')
+        input#searchsubmit(type='submit', value='Search')

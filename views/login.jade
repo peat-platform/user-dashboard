@@ -1,0 +1,59 @@
+extends layout
+
+block header
+	include ./header-clear.jade
+
+block main-container
+	#login-overlay.modal-dialog
+		.modal-content
+			.modal-header
+				button.close(type="button", data-dismiss="modal")
+					span(aria-hidden="true") ×
+					span.sr-only Close
+				h4.modal-title(id=myModalLabel) Login to OpenI-Daschboard.com
+			.modal-body
+				.row
+					.col-xs-6
+						.well
+							form(id="loginForm", method="POST", action="/user/login", novalidate="novalidate")
+								.form-group
+									label(for="username", class="control-label") Username
+									input(type="text", class="form-control", id="username", name="username", value="", required="", title="Please enter you username", placeholder="example@gmail.com")
+									span.help-block
+								.form-group
+									label(for="password", class="control-label") Password
+									input(type="password", class="form-control", id="password", name="password", value="", required="", title="Please enter your password")
+									span.help-block
+								#loginErrorMsg.alert.alert-error.hide Wrong username or password
+								.checkbox
+									label
+										input(type="checkbox", name="remember", id="remember")
+										span Remember login
+									p.help-block (if this is a private computer)
+								button(type="submit", class="btn btn-success btn-block") Login
+								a(href="/user/forgot/", class="btn btn-default btn-block") Help to login
+					.col-xs-6
+						p.lead Register now for 
+							span.text-success FREE
+						ul(class="list-unstyled", style="line-height: 2")
+							li
+								span(class="fa fa-check text-success") 
+								i  See all your orders
+							li
+								span(class="fa fa-check text-success") 
+								i  Fast re-order
+							li
+								span(class="fa fa-check text-success") 
+								i  Save your favorites
+							li
+								span(class="fa fa-check text-success") 
+								i  Fast checkout
+							li
+								span(class="fa fa-check text-success") 
+								i  Get a gift 
+									small (only new customers)
+							li
+								a(href="/user/read-more/")
+									u Read more
+						p
+							a(href="/user/register", class="btn btn-info btn-block") Yes please, register now!
