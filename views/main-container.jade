@@ -1,20 +1,20 @@
 extends layout
 
 block header
-	include ./header-navbar.jade
+    include ./header-navbar.jade
 
 block main-container
-	#main.wrapper
-		section#content-wrapper
-			#message-bar.swagger-ui-wrap.message-success
-				notification
-					<!--  place Notifications here  -->
-					block notify
-			#swagger-ui-container.swagger-ui-wrap
-				#api_info.info
-					.info_title #{ContentHeader}
-					.info_description #{ContentDesc}
-				#resources_container.container
-					block content
-	include ./footer.jade
+    #main.wrapper
+        section#content-wrapper
+            #message-bar.swagger-ui-wrap.message-success
+                notification
+                    <!--  place Notifications here  -->
+                    block notify
+            #swagger-ui-container.swagger-ui-wrap
+                #api_info.info
+                    .info_title #{ContentHeader}
+                    .info_description #{ContentDesc}
+                #resources_container.container
+                    block content
+    include ./footer.jade
 

@@ -1,15 +1,15 @@
 extends main-container
 
 block header
-	include ./header-navbar.jade
+    include ./header-navbar.jade
 
 block content
-	p
-	each c in clients
-		h3 Name: #{c.name}
-		p  Description: #{c.description}
-		p  API Key: #{c.api_key}
-		p  Secret Key: #{c.secret}
-		a(href="/user/permissions/#{c.api_key}") Manage App Permissions (TODO)
+    p
+    each c in clients
+        h3 Name: #{c.name}
+        p  Description: #{c.description}
+        p  API Key: #{c.api_key}
+        p  Secret Key: #{c.secret}
+        a(href="/user/permissions/#{c.api_key}") Manage App Permissions (TODO)
 
 

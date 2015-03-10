@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var debug  = require('debug')('openi-admin-ui');
+var debug  = require('debug')('openi-ui');
 var app    = require('../app');
 var http   = require('http');
 var m2node = require('m2node');
