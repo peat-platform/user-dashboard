@@ -28,9 +28,12 @@ router.post('/', function(req, res)
       res.redirect(401,'/');
       return;
     }
+     console.log(body);
     res.cookie('session', body.session, {maxAge: 1800000/* 30min */, httpOnly: true, path: '/user', signed: true});
     res.redirect(301,'/user');
   });
+
+
 });
 
 module.exports = router;

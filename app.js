@@ -24,6 +24,7 @@ var register       = require('./routes/register');
 var login          = require('./routes/login');
 var logout         = require('./routes/logout');
 var apps           = require('./routes/apps');
+var charts           = require('./routes/charts');
 
 
 /*****************************
@@ -60,7 +61,12 @@ app.use(cookieParser('4e3d00e7-7fc4-480f-b785-bafebbdcb74f'));
   cookie: { secure: true, maxAge: 3600000, foo: '' }
 }))*/
 
+console.log(__dirname);
+console.log(path.join(__dirname, 'public'));
+console.log(path.join(__dirname, 'bower_components'));
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'bower_components')));
+app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
 
 // Authentification check
 app.use('/user', function(req, res, next){
@@ -80,6 +86,7 @@ app.use('/login',                      login);
 app.use('/user/logout',               logout);
 app.use('/user/dashboard',            index(config));
 app.use('/user/apps',                 apps);
+app.use('/user/charts',                 charts);
 
 
 // catch 404 and forward to error handler
