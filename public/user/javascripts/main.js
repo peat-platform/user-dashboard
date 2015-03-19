@@ -4,23 +4,23 @@ var DASHBOARD = (function() {
     /*
      *  Functionality of the logout-button in the navbar
      */
-    $('#btn-logout-nav').click(function(){
-        logout();
-        //$( "#logout-confirm-dialog" ).dialog( "open" );
-    });    
-
-    function logout(){
-        var domain = location.host;
-        alert(domain);
-        $.ajax({
-            type: "POST",
-            url: "/user/logout",
-        })
-        .done(function( ) {
-            alert('logged out');
-            window.location.href = '/';
-        });
-    }
+    //$('#btn-logout-nav').click(function(){
+    //    logout();
+    //    //$( "#logout-confirm-dialog" ).dialog( "open" );
+    //});
+    //
+    //function logout(){
+    //    var domain = location.host;
+    //    alert(domain);
+    //    $.ajax({
+    //        type: "POST",
+    //        url: "/user/logout"
+    //    })
+    //    .done(function( ) {
+    //        alert('logged out');
+    //        window.location.href = '/';
+    //    });
+    //}
 
     // example funtions for a dialog box and notifications
 

@@ -61,9 +61,7 @@ app.use(cookieParser('4e3d00e7-7fc4-480f-b785-bafebbdcb74f'));
   cookie: { secure: true, maxAge: 3600000, foo: '' }
 }))*/
 
-console.log(__dirname);
-console.log(path.join(__dirname, 'public'));
-console.log(path.join(__dirname, 'bower_components'));
+
 app.use(express.static(path.join(__dirname, 'public')));
 //app.use(express.static(path.join(__dirname, 'bower_components')));
 app.use('/bower_components', express.static(path.join(__dirname, 'bower_components')));
@@ -82,15 +80,16 @@ app.use('/', login);
 app.use('/user/register',             register);
 app.use('/user',                      index(config));
 app.use('/user/login',                login);
-app.use('/login',                      login);
+app.use('/login',                     login);
 app.use('/user/logout',               logout);
 app.use('/user/dashboard',            index(config));
 app.use('/user/apps',                 apps);
-app.use('/user/charts',                 charts);
+app.use('/user/charts',               charts);
 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+   console.log(req);
     var err = new Error('Not Found');
     err.status = 404;
     next(err);

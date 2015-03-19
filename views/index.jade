@@ -4,8 +4,9 @@ block header
     include ./header-navbar.jade
 
 block content
-
-    p Welcome to 	#{title}
-    p Token: 		#{token}
-    p User: 		#{user}
-    p Cloudlet ID: 	#{cloudlet}
+    .entry-content
+        h1.page-title.fa.fa-user Your OPENi Profile
+        ul
+            li Token: 		#{token}
+            li User: 		#{user}
+            li Cloudlet ID: 	#{cloudlet}

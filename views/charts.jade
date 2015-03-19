@@ -4,6 +4,8 @@ block header
     include ./header-navbar.jade
 
 block content
+    .entry-content
+        h1.page-title.fa.fa-user Your Cloudlet Analytics
     .container
         .row.hidden
             .col-md-8.col-md-offset-2
@@ -61,20 +63,28 @@ block content
             hr
         .row &nbsp;
         .row
-            .col-md-5
+            .col-md-8.col-md-offset-2
                 #companyChartContainer
-            .col-md-2
-            .col-md-5
+        .row &nbsp;
+        .row
+            hr
+        .row &nbsp;
+        .row
+            .col-md-8.col-md-offset-2
                 #appChartContainer
         .row &nbsp;
         .row
             hr
         .row &nbsp;
         .row
-            .col-md-5
+            .col-md-8.col-md-offset-2
                 #objChartContainer
-            .col-md-2
-            .col-md-5
+        .row &nbsp;
+        .row
+            hr
+        .row &nbsp;
+        .row
+            .col-md-8.col-md-offset-2
                 #locChartContainer
 
 block append scripts
@@ -121,7 +131,7 @@ block append scripts
                     table: 'company'
                 },
                 chart: {
-                    type: 'column'
+                    type: 'pie'
                 },
                 title: {
                     text: 'Requests Per Company'

@@ -3,14 +3,15 @@ var auth = require('../libs/auth');
 var express = require('express');
 var router = express.Router();
 
-router.post('/', function(req, res)
+router.get('/', function(req, res)
 {
+   console.log('............');
   if(!req.signedCookies.session)
   {
     res.redirect('/');
     return;
   }
-  
+
   auth.deleteSession(req.signedCookies.session, function(err, body)
   {
     if(err)
@@ -32,5 +33,6 @@ router.post('/', function(req, res)
     res.redirect('/user');
   });
 });
+
 
 module.exports = router;
