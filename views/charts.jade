@@ -40,8 +40,9 @@ block content
                     caption Track By Object
                     thead
                         tr
-                            th APP
+                            th Object Data
                             th Requests
+                            th Object ID
                     tbody
         .row
             table.table.table-striped.table-bordered#visits(style="position: absolute; left: -9999em;")
@@ -104,8 +105,9 @@ block append scripts
             "bProcessing" : true,
             data: objResults,
             columns: [
-            {data: 'label'},
-            {data: 'nb_visits'}
+            {data: 'contentTarget'},
+            {data: 'nb_visits'},
+            {data: 'label'}
             ]
             });
             var locResults = !{JSON.stringify(locResults)};
@@ -170,7 +172,8 @@ block append scripts
             });
             $('#objChartContainer').highcharts({
                 data: {
-                    table: 'obj'
+                    table: 'obj',
+                    endColumn: 1
                 },
                 chart: {
                     type: 'column'
