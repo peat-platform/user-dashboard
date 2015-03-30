@@ -10,7 +10,7 @@ block main-container
                 button.close(type="button", data-dismiss="modal")
                     span(aria-hidden="true") ×
                     span.sr-only Close
-                h4.modal-title(id=myModalLabel) Register to OpenI-Daschboard.com
+                h4.modal-title(id=myModalLabel) Register with OPENi
             .modal-body
                 .row
                     .well
@@ -25,3 +25,9 @@ block main-container
                                 span.help-block
                             #loginErrorMsg.alert.alert-error.hide Wrong username or password
                             button(type="submit", class="btn btn-success btn-block") Register
+                            - if (typeof(error) !== 'undefined'){
+                                br
+                                br
+                                .error-template.alert.alert-danger(role="alert")
+                                    h1= error
+                            -}

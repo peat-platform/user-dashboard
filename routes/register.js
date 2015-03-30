@@ -14,10 +14,18 @@ router.post('/', function(req, res)
 {
   if(!req.body.username || !req.body.password)
   {
-    res.redirect(400,'/');
+     res.render('register', {error : 'Missing username and/or password'});
+     //res.render('error', {error : 'Missing username and/or password'});
     //res.send('respond with a resource');
     return;
   }
+
+
+
+   if (req.body.password.length < 8 || req.body.password.length > 80) {
+      res.render('register', {error : 'The password length must be between 6 and 80 characters.'});
+      return;
+   }
   
   auth.createUser(req.body.username, req.body.password, function(err, body)
   {
