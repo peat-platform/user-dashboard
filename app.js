@@ -24,7 +24,8 @@ var register       = require('./routes/register');
 var login          = require('./routes/login');
 var logout         = require('./routes/logout');
 var apps           = require('./routes/apps');
-var charts           = require('./routes/charts');
+var charts         = require('./routes/charts');
+var subscriptions  = require('./routes/subscriptions');
 
 
 /*****************************
@@ -77,14 +78,15 @@ app.use('/user', function(req, res, next){
 
 app.use('/', login);
 
-app.use('/user/register',             register);
-app.use('/user',                      index(config));
-app.use('/user/login',                login);
-app.use('/login',                     login);
-app.use('/user/logout',               logout);
-app.use('/user/dashboard',            index(config));
-app.use('/user/apps',                 apps);
-app.use('/user/charts',               charts);
+app.use('/user/register',           register);
+app.use('/user',                    index(config));
+app.use('/user/login',              login);
+app.use('/login',                   login);
+app.use('/user/logout',             logout);
+app.use('/user/dashboard',          index(config));
+app.use('/user/apps',               apps);
+app.use('/user/charts',             charts);
+app.use('/user/subscriptions',     subscriptions);
 
 
 // catch 404 and forward to error handler
