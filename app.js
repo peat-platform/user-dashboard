@@ -20,12 +20,13 @@ var config = {
 var index = require('./routes/index');
 
 // Simple_Auth
-var register       = require('./routes/register');
-var login          = require('./routes/login');
-var logout         = require('./routes/logout');
-var apps           = require('./routes/apps');
-var charts         = require('./routes/charts');
-var subscriptions  = require('./routes/subscriptions');
+var register        = require('./routes/register');
+var login           = require('./routes/login');
+var logout          = require('./routes/logout');
+var apps            = require('./routes/apps');
+var charts          = require('./routes/charts');
+var subscriptions   = require('./routes/subscriptions');
+var addSubscription = require('./routes/addSubscription');
 
 
 /*****************************
@@ -86,7 +87,9 @@ app.use('/user/logout',             logout);
 app.use('/user/dashboard',          index(config));
 app.use('/user/apps',               apps);
 app.use('/user/charts',             charts);
-app.use('/user/subscriptions',     subscriptions);
+app.use('/user/subscriptions',      subscriptions);
+app.use('/user/addSubscription',    addSubscription);
+
 
 
 // catch 404 and forward to error handler

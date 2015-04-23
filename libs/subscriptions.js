@@ -36,7 +36,6 @@ function getSubscriptions(session, cb)
  */
 function getSubscribers(session, cb)
 {
-   console.log(base + '/subscribers');
    crud('GET', base + '/subscribers', null, session, cb);
 }
 

@@ -20,19 +20,32 @@ router.get('/', function(req, res)
       }
       else {
 
+         var subscribers;
+         var subscriptions;
+
          subs.getSubscribers(req.signedCookies.session, function(err, body)
          {
-            console.log("-----------------------------------------")
             if (err) {
                console.log(err)
             }
-            console.log(body);
+            //console.log(body);
 
-            res.render('subscriptions', {user : decoded.user_id,
-               's': body,
-               'session' : req.signedCookies.session});
+            subscribers = body;
+
+            subs.getSubscriptions(req.signedCookies.session, function(err, body) {
+               if ( err ) {
+                  console.log(err)
+               }
+
+               subscriptions = body;
 
 
+               res.render('subscriptions', {user : decoded.user_id,
+                  'subscribers': subscribers,
+                  'subscriptions':subscriptions,
+                  'session' : req.signedCookies.session});
+
+            });
          });
       }
    });
