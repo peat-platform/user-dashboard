@@ -13,7 +13,7 @@ block main-container
                 h4.modal-title(id=myModalLabel) Log in to your OPENi Dashboard
             .modal-body
                 .row
-                    .col-xs-6
+                    .col-xs-12
                         .well
                             form(id="loginForm", method="POST", action="/user/login", novalidate="novalidate")
                                 .form-group
@@ -32,7 +32,7 @@ block main-container
                                     p.help-block (if this is a private computer)
                                 button(type="submit", class="btn btn-success btn-block") Login
                                 a(href="/user/forgot/", class="btn btn-default btn-block") Help to login
-                    .col-xs-6
+                    .col-xs-12
                         p.lead Don't have an account?
                         p
                             a(href="/user/register", class="btn btn-info btn-block") Register Now!
