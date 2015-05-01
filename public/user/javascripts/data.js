@@ -22,7 +22,7 @@ $('.column-left ul li a').click(function(){
       dataType: 'json',
       success: function (data) {
          for ( var i = 0; i < data.result.length; i++){
-            var id = data.result[i]['@id'];
+            var id = data.result[i]['@id'][1];
             $("#id_list").append('<li><a href="#">' + id + '</a></li>' );
             console.log(id)
          }
