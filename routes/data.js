@@ -28,8 +28,6 @@ router.get('/', function(req, res){
             else {
                var body = JSON.parse(body);
 
-               console.log(body);
-
                for ( var i = 0; i < body.result.length; i++ ) {
                   var entry = body.result[i];
                   tids.push(entry)
@@ -40,6 +38,7 @@ router.get('/', function(req, res){
 
             res.render('data_dashboard', {
                'user'      : decoded.user_id,
+               'cloudlet'  : decoded.cloudlet,
                'session'   : req.signedCookies.session,
                'types'     : tids,
                'error'     : e

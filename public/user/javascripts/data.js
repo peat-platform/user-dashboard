@@ -6,6 +6,7 @@ $('.column-left ul li a').click(function(){
 
    var id   = $(this).html();
    var auth = $("#session").val();
+   var cloud = $("#cloudlet").val();
 
    selectedCloudlet = id;
 
@@ -24,7 +25,6 @@ $('.column-left ul li a').click(function(){
          for ( var i = 0; i < data.result.length; i++){
             var id = data.result[i]['@id'][1];
             $("#id_list").append('<li><a href="#">' + id + '</a></li>' );
-            console.log(id)
          }
 
          $("ul#id_list li a").click(display_object_function)
@@ -40,9 +40,10 @@ var display_object_function = function(){
 
    var id   = $(this).html();
    var auth = $("#session").val();
+   var cloud = $("#cloudlet").val();
 
    $.ajax({
-      url: '/api/v1/objects/' + selectedCloudlet + id ,
+      url: '/api/v1/objects/' + cloud + "/" + id ,
       type: 'GET',
       data: {},
       headers: {
