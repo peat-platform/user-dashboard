@@ -20,13 +20,16 @@ var config = {
 var index = require('./routes/index');
 
 // Simple_Auth
-var register        = require('./routes/register');
-var login           = require('./routes/login');
-var logout          = require('./routes/logout');
+var addSubscription = require('./routes/addSubscription');
 var apps            = require('./routes/apps');
 var charts          = require('./routes/charts');
+var data            = require('./routes/data');
+var login           = require('./routes/login');
+var logout          = require('./routes/logout');
+var register        = require('./routes/register');
 var subscriptions   = require('./routes/subscriptions');
-var addSubscription = require('./routes/addSubscription');
+
+
 
 
 /*****************************
@@ -79,17 +82,17 @@ app.use('/user', function(req, res, next){
 
 app.use('/', login);
 
-app.use('/user/register',           register);
-app.use('/user',                    index(config));
-app.use('/user/login',              login);
-app.use('/login',                   login);
-app.use('/user/logout',             logout);
-app.use('/user/dashboard',          index(config));
+app.use('/user/addSubscription',    addSubscription);
 app.use('/user/apps',               apps);
 app.use('/user/charts',             charts);
+app.use('/user/data',               data);
+app.use('/user',                    index(config));
+app.use('/user/dashboard',          index(config));
+app.use('/login',                   login);
+app.use('/user/login',              login);
+app.use('/user/logout',             logout);
+app.use('/user/register',           register);
 app.use('/user/subscriptions',      subscriptions);
-app.use('/user/addSubscription',    addSubscription);
-
 
 
 // catch 404 and forward to error handler
