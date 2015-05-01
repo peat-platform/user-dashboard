@@ -15,6 +15,7 @@ block main-container
                 .row
                     .col-xs-12
                         .well
+                            div.help-block #{error}
                             form(id="loginForm", method="POST", action="/user/login", novalidate="novalidate")
                                 .form-group
                                     label(for="username", class="control-label") Username

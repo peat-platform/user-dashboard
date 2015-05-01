@@ -57,7 +57,7 @@ var display_object_function = function(){
          $("#data").html(JSON.stringify(data, undefined, 2))
       },
       error: function (data) {
-         console.err(data)
+         console.log(data)
       }
    });
 

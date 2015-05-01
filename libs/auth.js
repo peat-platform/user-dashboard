@@ -23,18 +23,19 @@ function crud(method, uri, body, authorization, cb)
 		strictSSL: false
 	}, function (err, res, body)
 	{
-		if(body && body.error) {
-         err = body.error;
-      }
-      else{
-         if (IsJsonString(body)){
-            body = JSON.parse(body)
-            cb(err, body);
+      if(body && body.error) {
+         err  = body;
+         body = undefined
+         if (IsJsonString(err)){
+            err = JSON.parse(err)
          }
-         else{
-            cb(err, body);
-         }
+         cb(err, body);
       }
+      if (IsJsonString(body)) {
+         body = JSON.parse(body)
+      }
+      cb(err, body);
+
 	});
 }
 

@@ -25,7 +25,7 @@ router.post('/', function(req, res)
     if(err)
     {
       console.error(err);
-      res.redirect(401,'/');
+      res.render('login', {'error':'Login failure, please try again.'});
       return;
     }
      console.log(body);
