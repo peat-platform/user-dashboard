@@ -1,0 +1,29 @@
+extends main-container
+
+block header
+	include ./header-navbar.jade
+
+block content
+	<div id="typesmain" class="wrapper">
+	<div class="column-left" style="float: left; width: 30%; height:200px; overflow: auto;">
+	<h3>User Accounts</h3>
+	ul
+		each tid in types
+			li
+				a(href="#")= tid
+	</div>
+	<div class="column-middle" style="float: left; width: 30%;height:200px; overflow: auto;">
+	<h3>Objects</h3>
+	<ul id="id_list"></ul>
+	</div>
+
+	<div style="clear:both; width:100%">
+	<h3>Data Record</h3>
+	<pre id="data"></pre>
+	</div>
+	script(type='text/javascript', src="/user/javascripts/md5.js")
+	script(type='text/javascript', src="/user/javascripts/data.js")
+	link(rel='stylesheet', href='/admin/stylesheets/data.css')
+
+	<input type="hidden" id="session" name="session" value="#{session}">
+	<input type="hidden" id="cloudlet" name="cloudlet" value="#{cloudlet}">

@@ -1,0 +1,36 @@
+// Created by dconway on 20/03/15.
+
+extends main-container
+block header
+    include ./header-navbar.jade
+block content
+    div.row.clearfix
+        div.col-md-6.column
+            h2 Subscribers to your Cloudlet
+            div.list-group
+                each sub in JSON.parse(subscribers)
+                    div.list-group-item
+                        p.list-group-item-text
+                        |  <b>Subscriber:</b> #{sub['@id']["_id"].split("/")[0]}
+
+                        p.list-group-item-text
+                        |  <b>Type:</b> #{sub['@id'].notification_type}
+
+                        p.list-group-item-text
+                        |  <b>Date Created:</b> #{sub['@id']._date_created}
+            //div
+            //    a(href="addSubscription")
+            //        button.btn Add Subscription
+        div.col-md-6.column
+            h2 My Subscription
+            div.list-group
+                each sub in JSON.parse(subscriptions)
+                    div.list-group-item
+                        p.list-group-item-text
+                        |  <b>Subscriber:</b> #{sub['@id']["_id"].split("/")[0]}
+
+                        p.list-group-item-text
+                        |  <b>Type:</b> #{sub['@id'].notification_type}
+
+                        p.list-group-item-text
+                        |  <b>Date Created:</b> #{sub['@id']._date_created}

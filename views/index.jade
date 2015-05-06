@@ -1,0 +1,12 @@
+extends main-container
+
+block header
+    include ./header-navbar.jade
+
+block content
+    .entry-content
+        h1.page-title.fa.fa-user Your OPENi Profile
+        ul
+            li Token: 		#{token}
+            li User: 		#{user}
+            li Cloudlet ID: 	#{cloudlet}
