@@ -18,17 +18,17 @@ function crud(method, uri, body, authorization, cb)
 	});
 }
 
-function createType(propName, openiType, required, multiple, allowedValues, contextID, referenceURL, cb)
+function createType(propName, type, required, multiple, allowedValues, contextID, referenceURL, cb)
 {
 	crud('POST', base + '/types',	{
 										"@context": [ //Developer specified array of object property description,
 									  		{
 										    	"@property_name": propName, // (String) name of the property in the object.
-									    		"@openi_type": openiType, // the primitive type that the property will be validated against, see openi_types
+									    		"@type":     type, // the primitive type that the property will be validated against, see openi_types
 									    		"@required": required, // (true or false) specifies if the object can be created with or without this context entry.
 									    		"@multiple": multiple, // (true or false) specifies if the property is an array or values or a single value.
 									    		"@allowed_values": allowedValues, // this property limits the values that the property can be set to (e.g - [ "foo","bar","world"] )
-									    		"@context_id": contextID // A context identifier for the property entry.
+									    		"@context": contextID // A context identifier for the property entry.
 									  		}
 										],
 										"@reference": referenceURL, //Developer specified URL of the refernce type,
