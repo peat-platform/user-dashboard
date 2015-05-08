@@ -18,7 +18,7 @@
     "jade": "",
     "jsonwebtoken": "",
     "lodash": "^3.5.0",
-    "m2node": "OPENi-ict/m2node",
+    "m2node": "peat-platform/m2node",
     "morgan": "~1.3.0",
     "mysql": "^2.5.5",
     "request": "",
