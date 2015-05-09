@@ -22,7 +22,6 @@ var piwikToken;
 var idSite;
 var domain = "http://localhost:8888/piwik/";
 
-//http://dev.openi-ict.eu:8888/piwik/index.php?module=API&method=UsersManager.getTokenAuth&format=JSON&userLogin=c_482e0245ff645f09e769e139dae278c6@openi.com&md5Password=5f4dcc3b5aa765d61d8327deb882cf99
 var request = require('request');
 var jwt     = require('jsonwebtoken');
 var crud    = require('../libs/crud');
