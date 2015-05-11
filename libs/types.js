@@ -24,7 +24,7 @@ function createType(propName, type, required, multiple, allowedValues, contextID
 										"@context": [ //Developer specified array of object property description,
 									  		{
 										    	"@property_name": propName, // (String) name of the property in the object.
-									    		"@type":     type, // the primitive type that the property will be validated against, see openi_types
+									    		"@data_type":     type, // the primitive type that the property will be validated against, see openi_types
 									    		"@required": required, // (true or false) specifies if the object can be created with or without this context entry.
 									    		"@multiple": multiple, // (true or false) specifies if the property is an array or values or a single value.
 									    		"@allowed_values": allowedValues, // this property limits the values that the property can be set to (e.g - [ "foo","bar","world"] )
