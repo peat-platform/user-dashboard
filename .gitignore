@@ -27,6 +27,7 @@ build/Release
 node_modules
 .npm
 
+.idea
 ## Directory-based project format
 .idea/workspace.xml
 .idea/tasks.xml
