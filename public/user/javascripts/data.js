@@ -4,11 +4,9 @@ var selectedCloudlet = '';
 
 $('.column-left ul li a').click(function(){
 
-   var id   = $(this).html();
-   var auth = $("#session").val();
+   var id    = $(this).attr('name');
+   var auth  = $("#session").val();
    var cloud = $("#cloudlet").val();
-
-   selectedCloudlet = id;
 
    $("#id_list").html("");
 
@@ -36,6 +34,29 @@ $('.column-left ul li a').click(function(){
 
 });
 
+
+$(window).load(function(){
+   $('.column-left ul li a').each(function(){
+      var obj    = $(this)
+      var typeId = obj.attr('name')
+      $.ajax({
+         url: '/api/v1/types/' + typeId,
+         type: 'GET',
+         data: {},
+         headers: {
+            "Content-Type"  : "application/json"
+         },
+         dataType: 'json',
+         success: function (data) {
+            obj.html(data['@reference'])
+         },
+         error: function (data) {
+         }
+      });
+   })
+})
+
+
 var display_object_function = function(){
 
    var id   = $(this).html();
@@ -52,8 +73,8 @@ var display_object_function = function(){
       },
       dataType: 'json',
       success: function (data) {
-         console.log(data);
          //$("#data").html("asdf")
+         $("#displayContainer").show()
          $("#data").html(JSON.stringify(data, undefined, 2))
       },
       error: function (data) {
