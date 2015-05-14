@@ -8,16 +8,16 @@ block content
 	<div class="column-left" style="float: left; width: 30%; height:200px; overflow: auto;">
 	<h3>User Accounts</h3>
 	ul
-		each tid in types
+		each type in types
 			li
-				a(href="#")= tid
+				a(href="#" name=type.id)= type.name
 	</div>
 	<div class="column-middle" style="float: left; width: 30%;height:200px; overflow: auto;">
 	<h3>Objects</h3>
 	<ul id="id_list"></ul>
 	</div>
 
-	<div style="clear:both; width:100%">
+	<div style="clear:both; width:100%; display:none" id="displayContainer">
 	<h3>Data Record</h3>
 	<pre id="data"></pre>
 	</div>

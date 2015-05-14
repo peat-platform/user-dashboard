@@ -28,12 +28,13 @@ router.get('/', function(req, res){
             else {
                var body = JSON.parse(body);
 
+               console.log(body)
+
                for ( var i = 0; i < body.result.length; i++ ) {
                   var entry = body.result[i];
-                  tids.push(entry)
+                  tids.push({"name" : entry, "id" : entry})
                }
 
-               console.log(tids)
             }
 
             res.render('data_dashboard', {

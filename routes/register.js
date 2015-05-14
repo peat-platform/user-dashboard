@@ -12,6 +12,7 @@ router.get('/', function(req, res)
 // POST route to register
 router.post('/', function(req, res)
 {
+
   if(!req.body.username || !req.body.password)
   {
      res.render('register', {error : 'Missing username and/or password'});
@@ -32,7 +33,8 @@ router.post('/', function(req, res)
     if(err)
     {
       console.error(err);
-      res.redirect(400,'/');
+      res.render('register', {error : 'An account with that username already exists.'});
+      //res.redirect(400,'/');
       return;
     }
 
