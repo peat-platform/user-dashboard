@@ -28,12 +28,17 @@ block body
                         br
                         br
                 ul.nav.nav-tabs
-                    li.active
+                    if register
+                        li
+                    else
+                        li.active
                         a(href='#login', data-toggle='tab') Login
-                    li
-                        a(href='#create', data-toggle='tab') Create Account
+                    if register
+                        li.active
+                    else
+                        li
+                            a(href='#create', data-toggle='tab') Create Account
                 #myTabContent.tab-content
-                    #login.tab-pane.active.in #{error}
                         .container-fluid(style='background: #222222;padding: 20px; padding-top: 20px')
                             div
                                 div(style='border-bottom: 1px solid #888;') Login
@@ -86,6 +91,7 @@ block body
                                         label.col-md-3.control-label(for='_openi_conf_passwd') Confirm Password
                                         .col-md-9
                                             input#_openi_conf_passwd.form-control(type='password', placeholder='Enter your Password')
+                                        div.errorMessage #{error}
                                     .input-group(style='margin-bottom: 15px')
                                         .checkbox
                                             label
