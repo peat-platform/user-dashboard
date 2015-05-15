@@ -28,17 +28,9 @@ block body
                         br
                         br
                 ul.nav.nav-tabs
-                    if register
-                        li
+                        li.active(id="loginTab")
                             a(href='#login', data-toggle='tab') Login
-                    else
-                        li.active
-                            a(href='#login', data-toggle='tab') Login
-                    if register
-                        li.active
-                            a(href='#create', data-toggle='tab') Create Account
-                    else
-                        li
+                        li(id="createTab")
                             a(href='#create', data-toggle='tab') Create Account
                 #myTabContent.tab-content
                         .container-fluid(style='background: #222222;padding: 20px; padding-top: 20px')
@@ -118,6 +110,8 @@ block body
                     | :)
             // /.modal-content
         // /.modal-dialog
-    // /.modal
+    // /.moda
+
+    <input id="activetab" value="#{register}" />
     script(src='../user/javascripts/openi_user_account.js', type='text/javascript')
     script(src='../user/javascripts/app_perm.js', type='text/javascript')

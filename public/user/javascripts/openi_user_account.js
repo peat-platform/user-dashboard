@@ -2,6 +2,13 @@
  * Created by nstasinos on 7/10/2014.
  */
 
+$(document).ready(function(){
+   if ($("#activetab").val()){
+      $("#loginTab").removeClass('active');
+      $("#createTab").addClass('active');
+   }
+})
+
 
 //
 //  check register input
