@@ -30,11 +30,13 @@ block body
                 ul.nav.nav-tabs
                     if register
                         li
+                            a(href='#create', data-toggle='tab') Create Account
                     else
                         li.active
-                        a(href='#login', data-toggle='tab') Login
+                            a(href='#login', data-toggle='tab') Login
                     if register
                         li.active
+                            a(href='#create', data-toggle='tab') Create Account
                     else
                         li
                             a(href='#create', data-toggle='tab') Create Account
