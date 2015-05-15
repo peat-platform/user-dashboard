@@ -4,8 +4,8 @@
 
 $(document).ready(function(){
    if ($("#activetab").val()){
-      $("#loginTab").removeClass('active');
-      $("#createTab").addClass('active');
+      //$("#loginTab").removeClass('active');
+      $("#createTab").click();
    }
 })
 
