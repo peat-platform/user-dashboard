@@ -1,20 +1,23 @@
 #headergroup
-    hgroup
-        h1.site-title
-            a(href='/user/', title='OPENi', rel='home') OPENi
         // <h2 class="site-description"></h2>
-    nav#site-navigation.main-navigation(role='navigation')
-        h3.menu-toggle Menu
-        a.assistive-text(href='#content', title='Skip to content') Skip to content
-        .menu-version1-container
-            ul#menu-version1.nav-menu
+nav.navbar.navbar-default(role='navigation')
+    div.navbar-header
+        button.navbar-toggle(type="button" data-target="#navbarCollapse" data-toggle="collapse")
+            span(class="sr-only") Toggle navigation
+            span(class="icon-bar")
+            span(class="icon-bar")
+            span(class="icon-bar")
+        a.navbar-brand(href="/user") PEAT User Dashboard
+        <!-- Collection of nav links and other content for toggling -->
+        div#navbarCollapse.collapse.navbar-collapse(style="width:100%")
+            ul.nav.navbar-nav
+                li.active
+                    a(href="/user/") Home
                 li
-                    a(href='/user/') Home
+                    a(href="/user/data") Data
                 li
-                    a(href='/user/subscriptions') Subscriptions
+                    a(href="/user/subscriptions") Subscriptions
                 li
-                    a(href='/user/charts') Analytics
-                li#menu-item-22.menu-item.menu-item-type-post_type.menu-item-object-page.menu-item-21
-                    a(href='/user/data') Data
+                    a(href="/user/charts") Access Log
                 li
-                    a(href='/user/logout') Logout
+                    a(href="/user/logout") Logout

@@ -45,9 +45,6 @@ app.set('views', path.join(__dirname, 'views'));
 //app.engine('haml', engines.haml);
 //app.engine('html', engines.hogan);
 app.set('view engine', 'jade');
-
-app.engine('.ejs', require('ejs').renderFile);
-
 //app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public

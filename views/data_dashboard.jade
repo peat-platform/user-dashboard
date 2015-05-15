@@ -1,29 +1,31 @@
 extends main-container
-
-block header
-	include ./header-navbar.jade
-
 block content
-	<div id="typesmain" class="wrapper">
-	<div class="column-left" style="float: left; width: 30%; height:200px; overflow: auto;">
-	<h3>User Accounts</h3>
-	ul
-		each type in types
-			li
-				a(href="#" name=type.id)= type.name
-	</div>
-	<div class="column-middle" style="float: left; width: 30%;height:200px; overflow: auto;">
-	<h3>Objects</h3>
-	<ul id="id_list"></ul>
-	</div>
+	div.panel.panel-default
+		div.panel-body
+			h3 Data Dashboard
+			div This page allows you to view the data in your account. Click on the links under the Data Types.
+			<div id="typesmain" class="wrapper">
+			<div>
+			<h5>Data Types</h5>
+			ul
+				each type in types
+					li
+						a(href="#" name=type.id)= type.name
+			</div>
+			<div>
+			<h5>Objects</h5>
+			<ul id="id_list"></ul>
+			</div>
 
-	<div style="clear:both; width:100%; display:none" id="displayContainer">
-	<h3>Data Record</h3>
-	<pre id="data"></pre>
-	</div>
-	script(type='text/javascript', src="/user/javascripts/md5.js")
-	script(type='text/javascript', src="/user/javascripts/data.js")
-	link(rel='stylesheet', href='/admin/stylesheets/data.css')
+			<div style="clear:both; width:100%; display:none" id="displayContainer">
+			<h5>Data Record</h5>
+			<pre id="data"></pre>
+			<h5>Meta Data</h5>
+			<pre id="meta_data"></pre>
+			</div>
+			script(type='text/javascript', src="/user/javascripts/md5.js")
+			script(type='text/javascript', src="/user/javascripts/data.js")
+			link(rel='stylesheet', href='/admin/stylesheets/data.css')
 
-	<input type="hidden" id="session" name="session" value="#{session}">
-	<input type="hidden" id="cloudlet" name="cloudlet" value="#{cloudlet}">
+			<input type="hidden" id="session" name="session" value="#{session}">
+			<input type="hidden" id="cloudlet" name="cloudlet" value="#{cloudlet}">

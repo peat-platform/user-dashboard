@@ -1,11 +1,5 @@
-extends layout
-
+extends new_layout
 block header
     include ./header-navbar.jade
 
-block main-container
-    #main.wrapper
-        section#content-wrapper
-            block content
-    include ./footer.jade
-
+    block content
