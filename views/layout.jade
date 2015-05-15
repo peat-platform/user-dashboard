@@ -4,7 +4,6 @@ html(lang="en")
         meta(charset="utf-8")
         meta(http-equiv="X-UA-Compatible" content="IE=edge")
         meta(name="viewport" content="width=device-width, initial-scale=1")
-        title= "OpenI User Dashboard"
 
         link(rel="icon" href="/user/favicon.ico" type="image/x-icon")
         link(rel="shortcut icon" href="/user/favicon.ico" type="image/x-icon")
@@ -28,15 +27,11 @@ html(lang="en")
         //if lt IE 9
             link#twentytwelve-ie-css(rel='stylesheet', href='https://www.openi-ict.eu/wp-content/themes/openi/css/ie.css?ver=20121010', type='text/css', media='all')
         link(rel='stylesheet', href='/user/stylesheets/style.css')
-    body.home.page.page-id-4.page-template-default.custom-font-enabled
-        #page.hfeed.site
-            header#masthead.site-header(role='banner')
-                <!--  place Header here  -->
-                block header
+    body
             // #masthead
         <!--  place the Main Container here  -->
-        block main-container
-        block scripts
+        include ./header-navbar.jade
+        block content
 
         script(type='text/javascript', src="/user/javascripts/bootstrap.min.js")
         script(type='text/javascript', src="/user/javascripts/jquery-ui.min.js")
