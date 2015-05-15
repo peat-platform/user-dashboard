@@ -16,7 +16,7 @@ router.post('/', function(req, res)
 {
   if(!req.body.username || !req.body.password)
   {
-    res.redirect(400,'/');
+    res.render('login', {'error':'Login failure, please try again.'});
     return;
   }
 
