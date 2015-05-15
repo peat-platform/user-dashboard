@@ -28,12 +28,12 @@ block body
                         br
                         br
                 ul.nav.nav-tabs
-                    li.active
+                    li{register ? '' : '.active'}
                         a(href='#login', data-toggle='tab') Login
-                    li
+                    li#{register ? '.active' : ''}
                         a(href='#create', data-toggle='tab') Create Account
                 #myTabContent.tab-content
-                    #login.tab-pane.active.in
+                    #login.tab-pane.active.in #{error}
                         .container-fluid(style='background: #222222;padding: 20px; padding-top: 20px')
                             div
                                 div(style='border-bottom: 1px solid #888;') Login

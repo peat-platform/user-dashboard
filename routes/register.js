@@ -15,7 +15,7 @@ router.post('/', function(req, res)
 
   if(!req.body.username || !req.body.password)
   {
-     res.render('register', {error : 'Missing username and/or password'});
+     res.render('login', {error : 'Missing username and/or password', register : true});
      //res.render('error', {error : 'Missing username and/or password'});
     //res.send('respond with a resource');
     return;
@@ -24,7 +24,7 @@ router.post('/', function(req, res)
 
 
    if (req.body.password.length < 8 || req.body.password.length > 80) {
-      res.render('register', {error : 'The password length must be between 6 and 80 characters.'});
+      res.render('login', {error : 'The password length must be between 6 and 80 characters.'});
       return;
    }
   
@@ -32,8 +32,7 @@ router.post('/', function(req, res)
   {
     if(err)
     {
-      console.error(err);
-      res.render('register', {error : 'An account with that username already exists.'});
+      res.render('login', {error : 'An account with that username already exists.', register : true});
       //res.redirect(400,'/');
       return;
     }
