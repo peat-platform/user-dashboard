@@ -39,7 +39,7 @@ router.get('/', function(req, res)
          res.render('/user/login')
       }
       else {
-         var login = decoded.cloudlet + '@openi.com';
+         var login = decoded.cloudlet + '@peat-platform.org';
          var password;
 
          function getPassword(params, callback) {
