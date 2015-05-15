@@ -28,9 +28,9 @@ block body
                         br
                         br
                 ul.nav.nav-tabs
-                    li{register ? '' : '.active'}
+                    li.active
                         a(href='#login', data-toggle='tab') Login
-                    li#{register ? '.active' : ''}
+                    li
                         a(href='#create', data-toggle='tab') Create Account
                 #myTabContent.tab-content
                     #login.tab-pane.active.in #{error}
