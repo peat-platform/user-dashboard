@@ -2,7 +2,7 @@ var selectedCloudlet = '';
 
 
 
-$('.column-left ul li a').click(function(){
+$('#typesmain ul li a').click(function(){
 
    var id    = $(this).attr('name');
    var auth  = $("#session").val();
@@ -36,7 +36,7 @@ $('.column-left ul li a').click(function(){
 
 
 $(window).load(function(){
-   $('.column-left ul li a').each(function(){
+   $('#typesmain ul li a').each(function(){
       var obj    = $(this)
       var typeId = obj.attr('name')
       $.ajax({
@@ -51,6 +51,7 @@ $(window).load(function(){
             obj.html(data['@reference'])
          },
          error: function (data) {
+            obj.html(typeId)
          }
       });
    })
