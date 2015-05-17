@@ -22,7 +22,7 @@ function crud(method, uri, body, cb, auth)
 }
 
 function readUserCloudlets(auth, cb){
-	var cl = "https://127.0.0.1/api/v1/objects?group_level=3&reduce=false&alltypes=true";
+	var cl = "https://127.0.0.1/api/v1/objects?group_level=3&reduce=true&alltypes=true";
 
 	crud('GET', cl, null, cb, auth)
 }
