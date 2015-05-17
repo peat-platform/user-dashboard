@@ -19,6 +19,7 @@ router.get('/', function(req, res){
          crud.readUserCloudlets(req.signedCookies.session, function(err, body){
 
             var tids = [];
+
             var e;
 
             if(err || body.indexOf("error") >= 0) {
@@ -32,7 +33,10 @@ router.get('/', function(req, res){
 
                for ( var i = 0; i < body.result.length; i++ ) {
                   var entry = body.result[i];
-                  tids.push({"name" : entry, "id" : entry})
+                  var obj = {"name" : entry, "id" : entry}
+                  if(tids.indexOf(obj) == -1) {
+                     tids.push(obj)
+                  }
                }
 
             }
