@@ -1,0 +1,41 @@
+extends new_layout
+block content
+	<link rel="stylesheet" href="/user/stylesheets/bootstrap-table.css">
+	<script src="/user/javascripts/bootstrap-table.js"></script>
+	div.panel.panel-default
+		div.panel-body
+			h3 Apps Dashboard
+			div This page lists the apps that have access to your data and shows which data records each
+				| app can access. It also allows you to revoke an apps access rights.
+				<div id="exampleModal" class="modal fade bs-example-modal-lg" role="dialog">
+				<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+				<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">Modal title</h4>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-primary okay-button">Delete</button>
+				</div>
+				</div><!-- /.modal-content -->
+				</div><!-- /.modal-dialog -->
+			</div><!-- /.modal -->
+			<div id="typesmain" class="wrapper">
+			<div>
+			<h5>Applications </h5>
+			ul
+				each p in perms
+					li
+						a(href="#" name=p.name)= p.name
+			</div>
+			<div>
+			</div>
+			<br/>
+			script(type='text/javascript', src="/user/javascripts/md5.js")
+			link(rel='stylesheet', href='/admin/stylesheets/data.css')
+
+			<input type="hidden" id="session" name="session" value="#{session}">
+			<input type="hidden" id="cloudlet" name="cloudlet" value="#{cloudlet}">
