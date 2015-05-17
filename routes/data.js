@@ -18,7 +18,8 @@ router.get('/', function(req, res){
       else {
          crud.readUserCloudlets(req.signedCookies.session, function(err, body){
 
-            var tids = [];
+            var dupCheck = []
+            var tids     = [];
 
             var e;
 
@@ -34,7 +35,8 @@ router.get('/', function(req, res){
                for ( var i = 0; i < body.result.length; i++ ) {
                   var entry = body.result[i];
                   var obj = {"name" : entry, "id" : entry}
-                  if(tids.indexOf(obj) == -1) {
+                  if(dupCheck.indexOf(entry) === -1) {
+                     dupCheck.push(entry)
                      tids.push(obj)
                   }
                }
