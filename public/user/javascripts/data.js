@@ -1,5 +1,6 @@
 var selectedCloudlet = '';
 
+var typeCache = {}
 
 
 $('#typesmain ul li a').click(function(){
@@ -39,6 +40,11 @@ $(window).load(function(){
    $('#typesmain ul li a').each(function(){
       var obj    = $(this)
       var typeId = obj.attr('name')
+
+      if (undefined !== typeCache[typeId]){
+         return typeCache[typeId]
+      }
+
       $.ajax({
          url: '/api/v1/types/' + typeId,
          type: 'GET',
@@ -48,6 +54,7 @@ $(window).load(function(){
          },
          dataType: 'json',
          success: function (data) {
+            typeCache[typeId] = data
             obj.html(data['@reference'])
          },
          error: function (data) {
@@ -57,6 +64,14 @@ $(window).load(function(){
    })
 })
 
+var typeMemberToContext = function(type){
+   var mapping = {}
+   for (var i = 0; i < type['@context'].length; i++){
+      var ce = type['@context'][i]
+      mapping[ce['@property_name']] = ce['@context']
+   }
+   return mapping;
+}
 
 var display_object_function = function(){
 
@@ -76,7 +91,20 @@ var display_object_function = function(){
       success: function (data) {
          //$("#data").html("asdf")
          $("#displayContainer").show()
-         $("#data").html(JSON.stringify(data, undefined, 2))
+         var type         = typeCache[data['@type']]
+         var type_mapping = typeMemberToContext(type)
+
+         $("#displayedEntryTitle").html(type['@reference'] + " (" + id + ")")
+         $("#displayedEntryTitle").attr('name', id)
+         $('#data_table tbody').html('')
+         for ( i in data['@data']){
+            $('#data_table > tbody:last').append('<tr><td>' + type_mapping[i] +'</td><td>'+ data['@data'][i] +'</td></tr>');
+         }
+         $('#data_table').bootstrapTable()
+
+         //$("#data").html(JSON.stringify(data['@data'], undefined, 2))
+         //delete data['@data']
+         //$("#meta_data").html(JSON.stringify(data, undefined, 2))
       },
       error: function (data) {
          console.log(data)
@@ -84,3 +112,45 @@ var display_object_function = function(){
    });
 
 };
+
+
+$("#deleteEntryButton").click(function(){
+   var objId = $("#displayedEntryTitle").attr('name')
+
+   $('#exampleModal').find('.modal-title').text('Delete ' + objId)
+   $('#exampleModal').find('.modal-body').html("Deleting data outside of its application may negatively effect your " +
+      "user experience with that application. Are you sure you want to delete this Data Entry?")
+
+   $('#exampleModal').modal('show');
+})
+
+
+$('#exampleModal .okay-button').click(function() {
+
+   var objId = $("#displayedEntryTitle").attr('name')
+   var auth  = $("#session").val();
+
+   $.ajax({
+      url: '/api/v1/objects/' + objId,
+      type: 'DELETE',
+      data: {},
+      headers: {
+         "Content-Type"  : "application/json",
+         "Authorization" : auth
+      },
+      dataType: 'json',
+      success: function (data) {
+         $("#displayContainer").hide()
+         $("#id_list li a:contains('" + objId + "')").parent().remove()
+         $('#exampleModal').modal('hide');
+      },
+      error: function (data) {
+         console.log(data)
+         $('#exampleModal').modal('hide');
+      }
+   });
+
+
+   $('#exampleModal').modal('hide');
+
+});
