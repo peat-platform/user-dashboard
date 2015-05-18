@@ -1,0 +1,9 @@
+@media (max-width: 768px) {
+    .modal-body{
+        padding: 0;
+    }
+}
+
+.errorMessage{
+    color: red;
+}
