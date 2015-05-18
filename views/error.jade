@@ -1,13 +1,10 @@
-extends main-container
-
-block header
-    include ./header-navbar.jade
+extends new_layout
 
 block content
     .error-template.alert.alert-danger(role="alert")
         strong Oops!
         br
         br
-        h1= error
+        h5= error
     //h2= error.status
     //pre #{error.stack}

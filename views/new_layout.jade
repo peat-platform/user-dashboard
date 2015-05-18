@@ -1,0 +1,23 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset='UTF-8')
+        title PEAT: Personal Data APIs & Trust
+        meta(name='viewport', content='width=device-width, initial-scale=1')
+        script(src='https://code.jquery.com/jquery-1.11.1.js')
+        // Latest compiled and minified CSS
+        // <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        link(rel='stylesheet', href='/user/stylesheets/bootstrap.min.css')
+        link(rel='stylesheet', href='/user/stylesheets/openi_account.css')
+        // Latest compiled and minified JavaScrip
+        meta(name="mobile-web-app-capable" content="yes")
+        script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js')
+            block scripts
+
+            script(type='text/javascript', src="/user/javascripts/bootstrap.min.js")
+            script(type='text/javascript', src="/user/javascripts/jquery-ui.min.js")
+            script(type='text/javascript', src="/user/javascripts/main.js")
+
+    body
+        include ./header-navbar.jade
+        block content

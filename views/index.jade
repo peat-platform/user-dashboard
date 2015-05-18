@@ -1,12 +1,12 @@
-extends main-container
-
-block header
-    include ./header-navbar.jade
+extends new_layout
 
 block content
-    .entry-content
-        h1.page-title.fa.fa-user Your OPENi Profile
-        ul
-            li Token: 		#{token}
-            li User: 		#{user}
-            li Cloudlet ID: 	#{cloudlet}
+    div.panel.panel-default
+        div.panel-heading(style="text-align:right")
+            div #{user}
+        div.panel-body
+            h4 Welcome to OPENi
+            div OPENi allow you to manage your personal information across many mobile applications and devices.
+
+
+

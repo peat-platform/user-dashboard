@@ -29,7 +29,7 @@ function crud(method, uri, body, authorization, cb)
          if (IsJsonString(err)){
             err = JSON.parse(err)
          }
-         cb(err, body);
+         //cb(err, body);
       }
       if (IsJsonString(body)) {
          body = JSON.parse(body)

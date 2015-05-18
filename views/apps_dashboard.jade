@@ -4,8 +4,9 @@ block content
 	<script src="/user/javascripts/bootstrap-table.js"></script>
 	div.panel.panel-default
 		div.panel-body
-			h3 Data Dashboard
-			div This page allows you to view the data in your account. Click on the links under the Data Types.
+			h3 Apps Dashboard
+			div This page lists the apps that have access to your data and shows which data records each
+				| app can access. It also allows you to revoke an apps access rights.
 				<div id="exampleModal" class="modal fade bs-example-modal-lg" role="dialog">
 				<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -24,39 +25,16 @@ block content
 			</div><!-- /.modal -->
 			<div id="typesmain" class="wrapper">
 			<div>
-			<h5>Data Types</h5>
+			<h5>Applications </h5>
 			ul
-				each type in types
+				each p in perms
 					li
-						a(href="#" name=type.id)= ' '
+						a(href="#" name=p.name)= p.name
 			</div>
 			<div>
-			<h5>Data Records</h5>
-			<ul id="id_list"></ul>
-			</div>
-
-			<div style="clear:both; width:100%; display:none" id="displayContainer">
-			<h5>Data Entry</h5>
-			<div id="displayedEntryTitle" name=""></div>
-			<div class="table-responsive" >
-			<table id="data_table" class="table table-hover" >
-			<thead>
-			<tr>
-			<th>Name</th>
-			<th>Value</th>
-			</tr>
-			</thead>
-			<tbody>
-			</tbody>
-			</table>
 			</div>
 			<br/>
-			<div class="btn-group btn-group-lg" role="group" aria-label="...">
-			<button id="deleteEntryButton" type="button" class="btn btn-danger">Delete</button>
-
-			</div>
 			script(type='text/javascript', src="/user/javascripts/md5.js")
-			script(type='text/javascript', src="/user/javascripts/data.js")
 			link(rel='stylesheet', href='/admin/stylesheets/data.css')
 
 			<input type="hidden" id="session" name="session" value="#{session}">

@@ -24,6 +24,7 @@ var addSubscription = require('./routes/addSubscription');
 var apps            = require('./routes/apps');
 var charts          = require('./routes/charts');
 var data            = require('./routes/data');
+var apps            = require('./routes/apps');
 var login           = require('./routes/login');
 var logout          = require('./routes/logout');
 var register        = require('./routes/register');
@@ -45,9 +46,6 @@ app.set('views', path.join(__dirname, 'views'));
 //app.engine('haml', engines.haml);
 //app.engine('html', engines.hogan);
 app.set('view engine', 'jade');
-
-app.engine('.ejs', require('ejs').renderFile);
-
 //app.set('view engine', 'ejs');
 
 // uncomment after placing your favicon in /public
@@ -83,9 +81,9 @@ app.use('/user', function(req, res, next){
 app.use('/', login);
 
 app.use('/user/addSubscription',    addSubscription);
-app.use('/user/apps',               apps);
 app.use('/user/charts',             charts);
 app.use('/user/data',               data);
+app.use('/user/apps',               apps);
 app.use('/user',                    index(config));
 app.use('/user/dashboard',          index(config));
 app.use('/login',                   login);

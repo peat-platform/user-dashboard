@@ -1,240 +1,238 @@
-extends main-container
-
-block header
-    include ./header-navbar.jade
+extends layout
 
 block content
-    .entry-content
-        h1.page-title.fa.fa-user Your Cloudlet Analytics
-    .container
-        .row.hidden
-            .col-md-8.col-md-offset-2
-                table.table.table-striped.table-bordered#app
-                    caption Track By App
+    div.panel.panel-default
+        div.panel-body
+        h3 Access log
+        div This page lists the amount of times that your data is accessed and who is accessing it.
+            .row.hidden
+                .col-md-8.col-md-offset-2
+                    table.table.table-striped.table-bordered#app
+                        caption Track By App
+                        thead
+                            tr
+                                th APP
+                                th Requests
+                        tbody
+            .row.hidden
+                .col-md-8.col-md-offset-2
+                    table.table.table-striped.table-bordered#company
+                        caption Track By Company
+                        thead
+                            tr
+                                th APP
+                                th Requests
+                        tbody
+            .row.hidden
+                .col-md-8.col-md-offset-2
+                    table.table.table-striped.table-bordered#loc
+                        caption Track By Location
+                        thead
+                            tr
+                                th APP
+                                th Requests
+                        tbody
+            .row.hidden
+                .col-md-8.col-md-offset-2
+                    table.table.table-striped.table-bordered#obj
+                        caption Track By Object
+                        thead
+                            tr
+                                th Object Data
+                                th Requests
+                                th Object ID
+                        tbody
+            .row
+                table.table.table-striped.table-bordered#visits(style="position: absolute; left: -9999em;")
+                    caption Visits
                     thead
                         tr
-                            th APP
+                            th DATE
                             th Requests
                     tbody
-        .row.hidden
-            .col-md-8.col-md-offset-2
-                table.table.table-striped.table-bordered#company
-                    caption Track By Company
-                    thead
-                        tr
-                            th APP
-                            th Requests
-                    tbody
-        .row.hidden
-            .col-md-8.col-md-offset-2
-                table.table.table-striped.table-bordered#loc
-                    caption Track By Location
-                    thead
-                        tr
-                            th APP
-                            th Requests
-                    tbody
-        .row.hidden
-            .col-md-8.col-md-offset-2
-                table.table.table-striped.table-bordered#obj
-                    caption Track By Object
-                    thead
-                        tr
-                            th Object Data
-                            th Requests
-                            th Object ID
-                    tbody
-        .row
-            table.table.table-striped.table-bordered#visits(style="position: absolute; left: -9999em;")
-                caption Visits
-                thead
-                    tr
-                        th DATE
-                        th Requests
-                tbody
-                    each val, index in visitResults
-                        tr
-                            td= index
-                            td= val
-        .row
-            .col-md-8.col-md-offset-2
-                #visitChartContainer
-        .row &nbsp;
-        .row
-            hr
-        .row &nbsp;
-        .row
-            .col-md-8.col-md-offset-2
-                #companyChartContainer
-        .row &nbsp;
-        .row
-            hr
-        .row &nbsp;
-        .row
-            .col-md-8.col-md-offset-2
-                #appChartContainer
-        .row &nbsp;
-        .row
-            hr
-        .row &nbsp;
-        .row
-            .col-md-8.col-md-offset-2
-                #objChartContainer
-        .row &nbsp;
-        .row
-            hr
-        .row &nbsp;
-        .row
-            .col-md-8.col-md-offset-2
-                #locChartContainer
+                        each val, index in visitResults
+                            tr
+                                td= index
+                                td= val
+            .row
+                .col-md-8.col-md-offset-2
+                    #visitChartContainer
+            .row &nbsp;
+            .row
+                hr
+            .row &nbsp;
+            .row
+                .col-md-8.col-md-offset-2
+                    #companyChartContainer
+            .row &nbsp;
+            .row
+                hr
+            .row &nbsp;
+            .row
+                .col-md-8.col-md-offset-2
+                    #appChartContainer
+            .row &nbsp;
+            .row
+                hr
+            .row &nbsp;
+            .row
+                .col-md-8.col-md-offset-2
+                    #objChartContainer
+            .row &nbsp;
+            .row
+                hr
+            .row &nbsp;
+            .row
+                .col-md-8.col-md-offset-2
+                    #locChartContainer
 
-block append scripts
-    script("type=text/javascript").
-        $(document).ready(function () {
-            var companyResults = !{JSON.stringify(companyResults)};
-            $('#company').DataTable({
-            "bProcessing" : true,
-            data: companyResults,
-            columns: [
-            {data: 'label'},
-            {data: 'nb_visits'}
-            ]
-            });
-            var objResults = !{JSON.stringify(objResults)};
-            $('#obj').DataTable({
-            "bProcessing" : true,
-            data: objResults,
-            columns: [
-            {data: 'contentTarget'},
-            {data: 'nb_visits'},
-            {data: 'label'}
-            ]
-            });
-            var locResults = !{JSON.stringify(locResults)};
-            $('#loc').DataTable({
-            "bProcessing" : true,
-            data: locResults,
-            columns: [
-            {data: 'label'},
-            {data: 'nb_visits'}
-            ]
-            });
-            var appResults = !{JSON.stringify(appResults)};
-            $('#app').DataTable({
-                "bProcessing": true,
-                data         : appResults,
-                columns      : [
-                    {data: 'label'},
-                    {data: 'nb_visits'}
+    block append scripts
+        script("type=text/javascript").
+            $(document).ready(function () {
+                var companyResults = !{JSON.stringify(companyResults)};
+                $('#company').DataTable({
+                "bProcessing" : true,
+                data: companyResults,
+                columns: [
+                {data: 'label'},
+                {data: 'nb_visits'}
                 ]
-            });
-            $('#companyChartContainer').highcharts({
-                data: {
-                    table: 'company'
-                },
-                chart: {
-                    type: 'pie'
-                },
-                title: {
-                    text: 'Requests Per Company'
-                },
-                yAxis: {
-                    allowDecimals: false,
-                    title: {
-                        text: 'Requests'
+                });
+                var objResults = !{JSON.stringify(objResults)};
+                $('#obj').DataTable({
+                "bProcessing" : true,
+                data: objResults,
+                columns: [
+                {data: 'contentTarget'},
+                {data: 'nb_visits'},
+                {data: 'label'}
+                ]
+                });
+                var locResults = !{JSON.stringify(locResults)};
+                $('#loc').DataTable({
+                "bProcessing" : true,
+                data: locResults,
+                columns: [
+                {data: 'label'},
+                {data: 'nb_visits'}
+                ]
+                });
+                var appResults = !{JSON.stringify(appResults)};
+                $('#app').DataTable({
+                    "bProcessing": true,
+                    data         : appResults,
+                    columns      : [
+                        {data: 'label'},
+                        {data: 'nb_visits'}
+                    ]
+                });
+                $('#companyChartContainer').highcharts({
+                    data: {
+                        table: 'company'
                     },
-                    min: 0
-                },
-                credits: {
-                    enabled: false
-                }
-            });
-            $('#appChartContainer').highcharts({
-                data: {
-                    table: 'app'
-                },
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Requests Per App'
-                },
-                yAxis: {
-                    allowDecimals: false,
-                    title: {
-                        text: 'Requests'
+                    chart: {
+                        type: 'pie'
                     },
-                    min: 0
-                },
-                credits: {
-                    enabled: false
-                }
-            });
-            $('#objChartContainer').highcharts({
-                data: {
-                    table: 'obj',
-                    endColumn: 1
-                },
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Requests Per Object'
-                },
-                yAxis: {
-                    allowDecimals: false,
                     title: {
-                        text: 'Requests'
+                        text: 'Requests Per Company'
                     },
-                    min: 0
-                },
-                credits: {
-                    enabled: false
-                }
-            });
-            $('#locChartContainer').highcharts({
-                data: {
-                    table: 'loc'
-                },
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'Requests Per Location'
-                },
-                yAxis: {
-                    allowDecimals: false,
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: 'Requests'
+                        },
+                        min: 0
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                });
+                $('#appChartContainer').highcharts({
+                    data: {
+                        table: 'app'
+                    },
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'Requests'
+                        text: 'Requests Per App'
                     },
-                    min: 0
-                },
-                credits: {
-                    enabled: false
-                }
-            });
-            $('#visitChartContainer').highcharts({
-                data: {
-                    table: 'visits'
-                },
-                chart: {
-                    type: 'line'
-                },
-                title: {
-                    text: 'Requests Over Time'
-                },
-                yAxis: {
-                    allowDecimals: false,
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: 'Requests'
+                        },
+                        min: 0
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                });
+                $('#objChartContainer').highcharts({
+                    data: {
+                        table: 'obj',
+                        endColumn: 1
+                    },
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'Requests'
+                        text: 'Requests Per Object'
                     },
-                    min: 0
-                },
-                credits: {
-                    enabled: false
-                }
-        });
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: 'Requests'
+                        },
+                        min: 0
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                });
+                $('#locChartContainer').highcharts({
+                    data: {
+                        table: 'loc'
+                    },
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Requests Per Location'
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: 'Requests'
+                        },
+                        min: 0
+                    },
+                    credits: {
+                        enabled: false
+                    }
+                });
+                $('#visitChartContainer').highcharts({
+                    data: {
+                        table: 'visits'
+                    },
+                    chart: {
+                        type: 'line'
+                    },
+                    title: {
+                        text: 'Requests Over Time'
+                    },
+                    yAxis: {
+                        allowDecimals: false,
+                        title: {
+                            text: 'Requests'
+                        },
+                        min: 0
+                    },
+                    credits: {
+                        enabled: false
+                    }
+            });
 
-        });
+            });
 
 
