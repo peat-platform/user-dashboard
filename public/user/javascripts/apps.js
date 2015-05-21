@@ -70,7 +70,7 @@ var typeMemberToContext = function(type){
    var mapping = {}
    for (var i = 0; i < type['@context'].length; i++){
       var ce = type['@context'][i]
-      mapping[ce['@property_name']] = ce['@context_id']
+      mapping[ce['@property_name']] = ce['@context']
    }
    return mapping;
 }
@@ -93,7 +93,7 @@ var display_object_function = function(){
       success: function (data) {
          //$("#data").html("asdf")
          $("#displayContainer").show()
-         var type         = typeCache[data['@openi_type']]
+         var type         = typeCache[data['@type']]
          var type_mapping = typeMemberToContext(type)
 
          $("#displayedEntryTitle").html(type['@reference'] + " (" + id + ")")
