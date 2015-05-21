@@ -1,7 +1,34 @@
 var selectedCloudlet = '';
 
-var typeCache = {}
+var appCache = {}
 
+$(window).load(function(){
+   $('#app_id_list ul li a').each(function(){
+      var obj    = $(this)
+      var appId = obj.attr('name')
+
+      if (undefined !== appCache[appId]){
+         return appCache[appId]
+      }
+
+      $.ajax({
+         url: '/api/v1/types/' + typeId,
+         type: 'GET',
+         data: {},
+         headers: {
+            "Content-Type"  : "application/json"
+         },
+         dataType: 'json',
+         success: function (data) {
+            typeCache[typeId] = data
+            obj.html(data['@reference'])
+         },
+         error: function (data) {
+            obj.html(typeId)
+         }
+      });
+   })
+})
 
 $('#typesmain ul li a').click(function(){
 
@@ -38,33 +65,6 @@ $('#typesmain ul li a').click(function(){
 });
 
 
-$(window).load(function(){
-   $('#typesmain ul li a').each(function(){
-      var obj    = $(this)
-      var typeId = obj.attr('name')
-
-      if (undefined !== typeCache[typeId]){
-         return typeCache[typeId]
-      }
-
-      $.ajax({
-         url: '/api/v1/types/' + typeId,
-         type: 'GET',
-         data: {},
-         headers: {
-            "Content-Type"  : "application/json"
-         },
-         dataType: 'json',
-         success: function (data) {
-            typeCache[typeId] = data
-            obj.html(data['@reference'])
-         },
-         error: function (data) {
-            obj.html(typeId)
-         }
-      });
-   })
-})
 
 var typeMemberToContext = function(type){
    var mapping = {}

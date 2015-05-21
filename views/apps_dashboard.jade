@@ -26,16 +26,19 @@ block content
 			<div id="typesmain" class="wrapper">
 			<div>
 			<h5>Applications </h5>
-			ul
-				each p in perms
+			ul#app_id_list
+				each c in clients
 					li
-						a(href="#" name=p.name)= p.name
+						h5= c.name
+						div= c.description
+						//button.btn.btn-default.btn-sm revoke
 			</div>
 			<div>
 			</div>
 			<br/>
-			script(type='text/javascript', src="/user/javascripts/md5.js")
+			script(type='text/javascript', src="/user/javascripts/md5.js")                                                                                            script(type = 'text/javascript', src = "/user/javascripts/data.js")
 			link(rel='stylesheet', href='/admin/stylesheets/data.css')
+			script(type='text/javascript', src="/user/javascripts/data.js")
 
 			<input type="hidden" id="session" name="session" value="#{session}">
 			<input type="hidden" id="cloudlet" name="cloudlet" value="#{cloudlet}">

@@ -67,6 +67,7 @@ function query(query, cb)
 	crud('POST', base + '/query', query, cb);
 }
 
+module.exports.crud = crud;
 module.exports.create = create;
 module.exports.createNamed = createNamed;
 module.exports.read = read;
