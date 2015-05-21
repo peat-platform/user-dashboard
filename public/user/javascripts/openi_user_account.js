@@ -49,7 +49,7 @@ function onClickRegisterButton() {
                }
                else {
                   if ( !$("#accept-openi").is(':checked') ) {
-                     error=("You must accept OPENi's terms and conditions");
+                     error=("You must accept PEAT's terms and conditions");
                      validated = false
                   }
                }
@@ -248,9 +248,9 @@ function getCookie(cname) {
 
 
 $("#findMorePeat").click(function(){
-   custAlert("OPENi is a secure web service that aims to give you better control over your " +
+   custAlert("PEAT is a secure web service that aims to give you better control over your " +
       "personal data. An app cannot view, change, or delete your data without your explicit permission." +
-      "To view the data in your account just swipe to the right on any OPENi enabled application and " +
-      "click on the 'OPEN DASHBOARD' button. This will open a portal to your OPENi account from which you " +
+      "To view the data in your account just swipe to the right on any PEAT enabled application and " +
+      "click on the 'OPEN DASHBOARD' button. This will open a portal to your PEAT account from which you " +
       "can view and control the access to your data.");
 })

@@ -10,7 +10,7 @@ block main-container
                 button.close(type="button", data-dismiss="modal")
                     span(aria-hidden="true") ×
                     span.sr-only Close
-                h4.modal-title(id=myModalLabel) Log in to your OPENi Dashboard
+                h4.modal-title(id=myModalLabel) Log in to your PEAT Dashboard
             .modal-body
                 .row
                     .col-xs-12

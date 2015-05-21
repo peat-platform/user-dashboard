@@ -1,4 +1,4 @@
-# OPENi User Dashboard
+# PEAT User Dashboard
 
 
 #### How to run this application

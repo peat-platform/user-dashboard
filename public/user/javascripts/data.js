@@ -93,7 +93,8 @@ var display_object_function = function(){
       success: function (data) {
          //$("#data").html("asdf")
          $("#displayContainer").show()
-         var type         = typeCache[data['@openi_type']]
+         var type         = typeCache[data['@type']]
+
          var type_mapping = typeMemberToContext(type)
 
          $("#displayedEntryTitle").html(type['@reference'] + " (" + id + ")")
