@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
    jwt.verify(req.signedCookies.session, config.key.verify, function (err, decoded) {
 
       if ( err ) {
-         res.render('/admin/login')
+         res.render('login')
       }
       else {
 

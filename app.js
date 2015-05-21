@@ -7,10 +7,7 @@ var bodyParser   = require('body-parser');
 var engines      = require('consolidate');
 
 var config = {
-   trusted_public_key: '-----BEGIN PUBLIC KEY-----\n'+
-   'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKT8kGk6ZNo3sC4IIo29leRLVD23T2r0\n'+
-   'vWXBEkk2pV42HsxKAmPs789AGHH9XwbGpD7FvrcBWWgb65v32Hg/NGkCAwEAAQ==\n'+
-   '-----END PUBLIC KEY-----'
+   trusted_public_key: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSRTD69QF3icNd6u7Pm4\nWO966/b6xxqbkhZgckvxmEQIsPSzGttAqr3PrznPGopvxMLAyEgcwQ8Bdbz7Jwei\nbyZPLn8s4XyNaZK2mA1pz5lV9B+QjoFYgqdlQPxj/VBMT7w3nOdqAHWC/evm0Ork\naDznvebbK2viGEONfl2t1oUqtaAnS+DHXG2vihvfFIRAUXLmIpOcTSC4zgK1y0Wj\n2mAG6OQWGVgKEyczByZqYrIScFnoebzTQXTmWjJp/eHjIag4q5zdPuXGR3w1hHeO\n+kK+mTyS5CkAVRYUooIH5nTGLvXG70KBeCAOgNNG27944frIbmvKyb6ZxbLLR2iA\nnwIDAQAB\n-----END PUBLIC KEY-----"
 }
 
 /*****************************
@@ -24,7 +21,7 @@ var addSubscription = require('./routes/addSubscription');
 var apps            = require('./routes/apps');
 var charts          = require('./routes/charts');
 var data            = require('./routes/data');
-var apps            = require('./routes/apps');
+var permissions     = require('./routes/apps');
 var login           = require('./routes/login');
 var logout          = require('./routes/logout');
 var register        = require('./routes/register');
@@ -81,9 +78,10 @@ app.use('/user', function(req, res, next){
 app.use('/', login);
 
 app.use('/user/addSubscription',    addSubscription);
+app.use('/user/apps',               apps);
 app.use('/user/charts',             charts);
 app.use('/user/data',               data);
-app.use('/user/apps',               apps);
+app.use('/user/permissions',        permissions);
 app.use('/user',                    index(config));
 app.use('/user/dashboard',          index(config));
 app.use('/login',                   login);

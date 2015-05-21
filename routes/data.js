@@ -13,7 +13,7 @@ router.get('/', function(req, res){
    jwt.verify(req.signedCookies.session, config.key.verify, function (err, decoded) {
 
       if (err) {
-         res.render('/user/login')
+         res.render('login')
       }
       else {
          crud.readUserCloudlets(req.signedCookies.session, function(err, body){
@@ -29,8 +29,6 @@ router.get('/', function(req, res){
             }
             else {
                var body = JSON.parse(body);
-
-               console.log(body)
 
                for ( var i = 0; i < body.result.length; i++ ) {
                   var entry = body.result[i];

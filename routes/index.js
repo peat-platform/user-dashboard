@@ -11,7 +11,7 @@ module.exports = function(config) {
       jwt.verify(req.signedCookies.session, config.trusted_public_key, function (err, decoded) {
 
          if (err) {
-            res.render('/user/login')
+            res.render('login')
          }
          else {
             res.render('index', {
