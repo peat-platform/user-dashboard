@@ -68,6 +68,17 @@ router.get('/', function(req, res){
                   }
                }
 
+               if (0 === keys.length){
+
+                  res.render('apps_dashboard', {
+                     'user'      : decoded.user_id,
+                     'cloudlet'  : decoded.cloudlet,
+                     'session'   : req.signedCookies.session,
+                     'clients'   : []
+                  });
+                  return
+               }
+
                getDbLazy("clients", function(db_use, err){
                   db_use.getMulti(keys, function (err, result) {
                      if (err) {
