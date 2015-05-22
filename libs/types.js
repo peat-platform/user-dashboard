@@ -28,7 +28,7 @@ function createType(propName, type, required, multiple, allowedValues, contextID
 									    		"@required": required, // (true or false) specifies if the object can be created with or without this context entry.
 									    		"@multiple": multiple, // (true or false) specifies if the property is an array or values or a single value.
 									    		"@allowed_values": allowedValues, // this property limits the values that the property can be set to (e.g - [ "foo","bar","world"] )
-									    		"@context": contextID // A context identifier for the property entry.
+									    		"@description": contextID // A context identifier for the property entry.
 									  		}
 										],
 										"@reference": referenceURL, //Developer specified URL of the refernce type,
