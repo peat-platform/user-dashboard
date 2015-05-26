@@ -18,6 +18,7 @@ block content
                                     p.list-group-item-text
                                     |  <b>Date Created:</b> #{sub['@id']._date_created}
 
+
                 div.col-md-6.column
                     h5 Your Subscriptions to others
                     div.list-group
@@ -30,3 +31,7 @@ block content
                                     |  <b>Type:</b> #{sub['@id'].notification_type}
                                     p.list-group-item-text
                                     |  <b>Date Created:</b> #{sub['@id']._date_created}
+
+
+            a(href="addSubscription")
+                button.btn Add Subscription
