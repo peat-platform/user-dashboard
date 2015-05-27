@@ -25,6 +25,7 @@ router.get('/', function(req, res)
 
          subs.getSubscribers(req.signedCookies.session, function(err, body)
          {
+            console.log(body);
             if (err) {
                console.log(err)
             }
@@ -35,6 +36,7 @@ router.get('/', function(req, res)
                if ( err ) {
                   console.log(err)
                }
+               console.log(body);
 
                subscriptions = body;
 
