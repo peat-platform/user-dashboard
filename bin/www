@@ -1,6 +1,16 @@
 #!/usr/bin/env node
+
+var args = require('commander');
+
+args
+   .version('0.0.1')
+   .option('-s, --seckeyenc [value]', 'Secret key')
+   .option('-p, --auth_server_public_key [value]', 'Auth Servers Public Key')
+
+   .parse(process.argv);
+
 var debug  = require('debug')('openi-ui');
-var app    = require('../app');
+var app    = require('../app')(args);
 var http   = require('http');
 var https   = require('https');
 var m2node = require('m2node');
