@@ -25,6 +25,8 @@ router.get('/', function(req, res)
 
          subs.getSubscribers(req.signedCookies.session, function(err, body)
          {
+            subscribers = body;
+
             if (body.indexOf("Not Found")){
                err = "Mongrel2 handler settings Incorrect. Please check configuration"
             }
@@ -32,7 +34,7 @@ router.get('/', function(req, res)
                console.log(err)
             }
 
-            subscribers = body;
+
 
             subs.getSubscriptions(req.signedCookies.session, function(err, body) {
                if ( err ) {

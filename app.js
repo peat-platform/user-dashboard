@@ -15,15 +15,14 @@ var wrap = function(args) {
    var index = require('./routes/index')(args);
 
 // Simple_Auth
-   var addSubscription = require('./routes/addSubscription')(args);
-   var apps = require('./routes/apps')(args);
-   var charts = require('./routes/charts')(args);
-   var data = require('./routes/data')(args);
-   var apps = require('./routes/apps')(args);
-   var login = require('./routes/login')(args);
-   var logout = require('./routes/logout')(args);
-   var register = require('./routes/register')(args);
-   var subscriptions = require('./routes/subscriptions')(args);
+   var addSubscription  = require('./routes/addSubscription')(args);
+   var apps             = require('./routes/apps')(args);
+   var charts           = require('./routes/charts')(args);
+   var data             = require('./routes/data')(args);
+   var login            = require('./routes/login')(args);
+   var logout           = require('./routes/logout')(args);
+   var register         = require('./routes/register')(args);
+   var subscriptions    = require('./routes/subscriptions')(args);
 
 
    /*****************************
@@ -74,17 +73,17 @@ var wrap = function(args) {
 
    app.use('/', login);
 
-   app.use('/user/addSubscription', addSubscription);
-   app.use('/user/charts', charts);
-   app.use('/user/data', data);
-   app.use('/user/apps', apps);
-   app.use('/user', index);
-   app.use('/user/dashboard', index);
-   app.use('/login', login);
-   app.use('/user/login', login);
-   app.use('/user/logout', logout);
-   app.use('/user/register', register);
-   app.use('/user/subscriptions', subscriptions);
+   app.use('/user/addSubscription',    addSubscription);
+   app.use('/user/charts',             charts);
+   app.use('/user/data',               data);
+   app.use('/user/apps',               apps);
+   app.use('/user',                    index);
+   app.use('/user/dashboard',          index);
+   app.use('/login',                   login);
+   app.use('/user/login',              login);
+   app.use('/user/logout',             logout);
+   app.use('/user/register',           register);
+   app.use('/user/subscriptions',      subscriptions);
 
 
 // catch 404 and forward to error handler
