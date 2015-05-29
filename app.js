@@ -15,14 +15,14 @@ var wrap = function(args) {
    var index = require('./routes/index')(args);
 
 // Simple_Auth
-   var addSubscription  = require('./routes/addSubscription')(args);
-   var apps             = require('./routes/apps')(args);
-   var charts           = require('./routes/charts')(args);
-   var data             = require('./routes/data')(args);
-   var login            = require('./routes/login')(args);
-   var logout           = require('./routes/logout')(args);
-   var register         = require('./routes/register')(args);
-   var subscriptions    = require('./routes/subscriptions')(args);
+   var addSubscription  = require('./routes/addSubscription');
+   var apps             = require('./routes/apps');
+   var charts           = require('./routes/charts');
+   var data             = require('./routes/data');
+   var login            = require('./routes/login');
+   var logout           = require('./routes/logout');
+   var register         = require('./routes/register');
+   var subscriptions    = require('./routes/subscriptions');
 
 
    /*****************************
