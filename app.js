@@ -6,12 +6,22 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var engines      = require('consolidate');
 
+var config = {
+   trusted_public_key: '-----BEGIN PUBLIC KEY-----\n'+
+   'MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAKT8kGk6ZNo3sC4IIo29leRLVD23T2r0\n'+
+   'vWXBEkk2pV42HsxKAmPs789AGHH9XwbGpD7FvrcBWWgb65v32Hg/NGkCAwEAAQ==\n'+
+   '-----END PUBLIC KEY-----'
+}
+
 var wrap = function(args) {
 
    /*****************************
     *       IMPLEMENT ROUTES     *
     *****************************/
 // Overview Dashboard
+   if (args.auth_server_public_key == undefined){
+      args.auth_server_public_key = config.trusted_public_key
+   }
    var index = require('./routes/index')(args);
 
 // Simple_Auth

@@ -5,6 +5,8 @@ module.exports = function(config) {
 
    var router = express.Router();
 
+   console.log(config.auth_server_public_key)
+
    /* GET home page. */
    router.get('/', function (req, res) {
 
