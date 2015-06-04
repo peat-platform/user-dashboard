@@ -36,7 +36,7 @@ function handleDisconnect() {
    });
 }
 
-handleDisconnect();
+//handleDisconnect();
 
 
 

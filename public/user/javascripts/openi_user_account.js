@@ -10,18 +10,32 @@ $(document).ready(function(){
 
 
 //
+//    validate email
+//
+function validateEmail(email) {
+   // [a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
+
+
+//
 //  check register input
 //
 function onClickRegisterButton() {
 
    var username        = $(" #_openi_username").val();
+   var email               = $("#_openi_email").val();
    var password        = $(" #_openi_passwd").val();
    var confirmPassword = $(" #_openi_conf_passwd").val();
    var validated       = true;
    var error           = null;
 
-   if (username === "") {
-
+   if ( !validateEmail(email) ){
+      error=("Please provide an valid email adress");
+      validated = false;
+   }
+   if (username === "") {      
       if (password === "" && confirmPassword ==="") {
          error=("Please provide correct credentials");
          validated = false;

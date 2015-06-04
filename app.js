@@ -26,6 +26,7 @@ var login           = require('./routes/login');
 var logout          = require('./routes/logout');
 var register        = require('./routes/register');
 var subscriptions   = require('./routes/subscriptions');
+var verifyUser  = require('./routes/verifyUser');
 
 
 
@@ -78,7 +79,7 @@ app.use('/user', function(req, res, next){
 app.use('/', login);
 
 app.use('/user/addSubscription',    addSubscription);
-app.use('/user/apps',               apps);
+app.use('/user/apps',                      apps);
 app.use('/user/charts',             charts);
 app.use('/user/data',               data);
 app.use('/user',                    index(config));
@@ -88,11 +89,11 @@ app.use('/user/login',              login);
 app.use('/user/logout',             logout);
 app.use('/user/register',           register);
 app.use('/user/subscriptions',      subscriptions);
-
+app.use('/verify',              verifyUser);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-   console.log(req);
+   //console.log(req);
     var err = new Error('Not Found');
     err.status = 404;
     next(err);

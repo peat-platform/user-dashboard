@@ -3,13 +3,14 @@ var debug  = require('debug')('openi-ui');
 var app    = require('../app');
 var http   = require('http');
 var https   = require('https');
-var m2node = require('m2node');
+//var m2node = require('m2node');
 
 
+var server = http.createServer(app);
+server.listen(3000);
 
-
-m2node.run(
+/*m2node.run(
    http.createServer(app), {
       send_spec: 'tcp://127.0.0.1:49924',
       recv_spec: 'tcp://127.0.0.1:49923'
-   });
+   });*/

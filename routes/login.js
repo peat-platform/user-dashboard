@@ -20,6 +20,9 @@ router.post('/', function(req, res)
     return;
   }
 
+  // TODO - check if user is activated by email -> then login in
+  //              else remind user to verify the email adress -> redirect to get verification mail
+
   auth.createSession(req.body.username, req.body.password, function(err, body)
   {
     if(err)
