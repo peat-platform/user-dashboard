@@ -15,11 +15,13 @@ router.get('/:token', function(req, res)
 	if( token !== dbVerificationHash) 
 	{ // ERROR: wrong hash
 		res.render('verify', {error : 'No verification prozess found.', user : username});
+		return;
 	}
 
 	if( (actualTime - dbTimestamp) > 900000 /* 15min */ ) 
 	{ // ERROR: verification code expired
 		res.render('verify', {error : 'Your verification code is expired.', user : username});
+		return;
 	}
 
 	// TODO update user verification status in DB !!!

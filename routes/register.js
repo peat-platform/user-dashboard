@@ -2,7 +2,7 @@ var request = require('request');
 var auth = require('../libs/auth');
 var express = require('express');
 
-var userVerification = require('../libs/userVerificationLib');
+var verifyUser = require('../libs/verifyUser');
 
 var router = express.Router();
 
@@ -36,28 +36,8 @@ router.post('/', function(req, res)
 		res.render('login', {error : 'The email you entered must be a valid email adress.'});
 		return;
 	}
-
-	 /*          1. create unique hash and timestamp for activation email. Sign user with "activated = false".
-		 *              (e.g. hash as unique user activation uri, timestamp for limited acceptance time for this hash, may 30min?)
-
-		 *          2. build up and send mail to registered user email with unique activation url.
-		 *              ( use nodemailer, configurate smtp or other transporttype, further mailoptions, ssl/starttls?, Mail render as HTML, Unicode ) */
-		 console.log('\n' + req.body.email + '\n');
-
-		 var rootDomain = req.protocol +'://'+ req.hostname;
-
-		userVerification.generateVerificationSet( req.body.username, req.body.email )
-		.then( function( verificationSet )
-		{
-			userVerification.sendVerificationMail
-			( 
-				verificationSet,														// verification credentials
-				'Sebastian Schmidt<sebastian.schmidt.business@gmail.com>',	// from - sender mail
-				req.body.email 														// to - user mail
-			);
-		});
 	
-	/*auth.createUser(req.body.username, req.body.password, function(err, body)
+	auth.createUser(req.body.username, req.body.password, function(err, body)
 	{
 		if(err)
 		{
@@ -67,8 +47,22 @@ router.post('/', function(req, res)
 		}
 
 
+		/* 
+		 *	Creates a unique hash and timestamp for verification mail. Sign user as "activated = false".
+		 *  Builds and sends the verification mail to the user mail with a unique varification url.
+		 */
+		verifyUser.generateVerificationSet( req.body.username, req.body.email )
+		.then( function( verificationSet )
+		{
+			verifyUser.sendVerificationMail
+			( 
+				verificationSet		// verification credentials
+			);
+		});
 
-
+		// TODO - 	auth.createSession should not be called here anymore
+		//			instead the user should be redirected to login page 
+		//			after a successfull verification via verifyUser route.
 
 		auth.createSession(req.body.username, req.body.password, function(err, body)
 		{
@@ -78,10 +72,10 @@ router.post('/', function(req, res)
 				res.redirect(400,'/');
 				return;
 			}
-			res.cookie('session', body.session, {maxAge: 1800000/* 30min /, httpOnly: true, path: '/user', signed: true});
+			res.cookie('session', body.session, {maxAge: 1800000/* 30min */, httpOnly: true, path: '/user', signed: true});
 			res.redirect('/user');
 		});
-	});*/
+	});
 });
 
 // validate email adress
