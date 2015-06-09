@@ -22,7 +22,8 @@ var wrap = function(args) {
    if (args.auth_server_public_key == undefined){
       args.auth_server_public_key = config.trusted_public_key
    }
-   var index = require('./routes/index')(args);
+
+   /*var index = require('./routes/index')(args);
 
 // Simple_Auth
    var addSubscription  = require('./routes/addSubscription');
@@ -32,13 +33,15 @@ var wrap = function(args) {
    var login            = require('./routes/login');
    var logout           = require('./routes/logout');
    var register         = require('./routes/register');
-   var subscriptions    = require('./routes/subscriptions');
+   var subscriptions    = require('./routes/subscriptions');*/
 
 
    /*****************************
     *        INITIALIZE APP      *
     *****************************/
    var app = express();
+
+   var routes = require('./routes/routes')(args);
 
 // view engine setup
    app.set('views', path.join(__dirname, 'views'));
@@ -81,9 +84,9 @@ var wrap = function(args) {
       }
    });
 
-   app.use('/', login);
+   app.use('/user', routes);
 
-   app.use('/user/addSubscription',    addSubscription);
+   /*app.use('/user/addSubscription',    addSubscription);
    app.use('/user/charts',             charts);
    app.use('/user/data',               data);
    app.use('/user/apps',               apps);
@@ -93,7 +96,7 @@ var wrap = function(args) {
    app.use('/user/login',              login);
    app.use('/user/logout',             logout);
    app.use('/user/register',           register);
-   app.use('/user/subscriptions',      subscriptions);
+   app.use('/user/subscriptions',      subscriptions);*/
 
 
 // catch 404 and forward to error handler

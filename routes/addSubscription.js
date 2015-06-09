@@ -11,26 +11,29 @@ var router  = express.Router();
 
 var apiKeyExtract = new RegExp(/[a-z,0-9]{32}/m);
 
-router.get('/', function(req, res) {
-   //console.log("req", req.signedCookies.session)
+module.exports = function(cmd_args) {
 
-   jwt.verify(req.signedCookies.session, config.key.verify, function (err, decoded) {
+   var seckeyenc            = cmd_args.seckeyenc;
+   var user_dash_public_key = cmd_args.auth_server_public_key.replace(/'/g, "").replace(/"/g, '').replace(/\\n/g, "\n");
 
-      if ( err ) {
-         res.render('/admin/login')
-      }
-      else {
+   return function (req, res, next) {
 
-         res.render('addSubscription', {
-            user     : decoded.user_id,
-            'session': req.signedCookies.session
-         });
+      jwt.verify(req.signedCookies.session, user_dash_public_key, function (err, decoded) {
 
+         if ( err ) {
+            res.render('/admin/login')
+         }
+         else {
 
-      }
-
-   });
-});
+            res.render('addSubscription', {
+               user     : decoded.user_id,
+               'session': req.signedCookies.session
+            });
 
 
-module.exports = router;
+         }
+
+      });
+
+   }
+};
