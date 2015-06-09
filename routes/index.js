@@ -26,4 +26,4 @@ module.exports = function(config) {
    });
 
    return router
-}
+};
