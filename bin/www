@@ -5,8 +5,9 @@ var http   = require('http');
 var https   = require('https');
 var m2node = require('m2node');
 
-
-
+// for local testing without the api or mongrel
+/*var server = http.createServer(app);
+server.listen(3000);*/
 
 m2node.run(
    http.createServer(app), {

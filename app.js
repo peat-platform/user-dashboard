@@ -5,6 +5,7 @@ var logger       = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var engines      = require('consolidate');
+var util              = require('util');
 
 var config = {
    trusted_public_key: "-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnSRTD69QF3icNd6u7Pm4\nWO966/b6xxqbkhZgckvxmEQIsPSzGttAqr3PrznPGopvxMLAyEgcwQ8Bdbz7Jwei\nbyZPLn8s4XyNaZK2mA1pz5lV9B+QjoFYgqdlQPxj/VBMT7w3nOdqAHWC/evm0Ork\naDznvebbK2viGEONfl2t1oUqtaAnS+DHXG2vihvfFIRAUXLmIpOcTSC4zgK1y0Wj\n2mAG6OQWGVgKEyczByZqYrIScFnoebzTQXTmWjJp/eHjIag4q5zdPuXGR3w1hHeO\n+kK+mTyS5CkAVRYUooIH5nTGLvXG70KBeCAOgNNG27944frIbmvKyb6ZxbLLR2iA\nnwIDAQAB\n-----END PUBLIC KEY-----"
@@ -26,6 +27,7 @@ var login           = require('./routes/login');
 var logout          = require('./routes/logout');
 var register        = require('./routes/register');
 var subscriptions   = require('./routes/subscriptions');
+var verifyUser  = require('./routes/verifyUser');
 
 
 
@@ -78,7 +80,7 @@ app.use('/user', function(req, res, next){
 app.use('/', login);
 
 app.use('/user/addSubscription',    addSubscription);
-app.use('/user/apps',               apps);
+app.use('/user/apps',                      apps);
 app.use('/user/charts',             charts);
 app.use('/user/data',               data);
 app.use('/user',                    index(config));
@@ -88,11 +90,11 @@ app.use('/user/login',              login);
 app.use('/user/logout',             logout);
 app.use('/user/register',           register);
 app.use('/user/subscriptions',      subscriptions);
-
+app.use('/verify',              verifyUser);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-   console.log(req);
+   util.log(req);
     var err = new Error('Not Found');
     err.status = 404;
     next(err);
