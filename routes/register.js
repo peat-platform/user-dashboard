@@ -1,10 +1,11 @@
-var request = require('request');
-var auth = require('../libs/auth');
-var express = require('express');
+var request 	= require('request');
+var auth 		= require('../libs/auth');
+var express 	= require('express');
 
-var verifyUser = require('../libs/verifyUser');
+var verifyUser 	= require('../libs/verifyUser');
+var redis		= require('../util/redisConnection');
 
-var router = express.Router();
+var router 		= express.Router();
 
 // GET route to get the register site
 router.get('/', function(req, res)
@@ -46,6 +47,9 @@ router.post('/', function(req, res)
 			return;
 		}
 
+		// gather data for the verification process
+		var rootDomain = req.protocol + '://'+ req.get('Host');
+		console.log( rootDomain ); 
 
 		/* 
 		 *	Creates a unique hash and timestamp for verification mail. Sign user as "activated = false".
@@ -54,17 +58,29 @@ router.post('/', function(req, res)
 		verifyUser.generateVerificationSet( req.body.username, req.body.email )
 		.then( function( verificationSet )
 		{
-			verifyUser.sendVerificationMail
-			( 
-				verificationSet		// verification credentials
-			);
+			// first param is the rootDomain for the verification request
+			// (e.g. rootDomain + '/verify/'' + token +'/'+ username)
+			// second params comes from generateVerificationSet via resolve(verificationSet)
+			verifyUser.sendVerificationMail( rootDomain, verificationSet)
+			.then( function(data) 
+			{
+				console.log(data);
+				res.render('login', {error : 'You got an verification mail. Please confirm your email by using the link provided in this verification mail.', register : true});
+			})
+			.otherwise( function(err) // some error happens during the send verification mail
+			{
+				res.render('error', {error : error});
+			});
+		})
+		.otherwise( function(err)
+		{		// some error happens during the verification generation
+			res.render('error', {error : error});
 		});
 
-		// TODO - 	auth.createSession should not be called here anymore
-		//			instead the user should be redirected to login page 
-		//			after a successfull verification via verifyUser route.
 
-		auth.createSession(req.body.username, req.body.password, function(err, body)
+		// users should verify their emails before they can login, so this commented block can be deleted !
+
+		/*auth.createSession(req.body.username, req.body.password, function(err, body)
 		{
 			if(err)
 			{
@@ -72,13 +88,13 @@ router.post('/', function(req, res)
 				res.redirect(400,'/');
 				return;
 			}
-			res.cookie('session', body.session, {maxAge: 1800000/* 30min */, httpOnly: true, path: '/user', signed: true});
+			res.cookie('session', body.session, {maxAge: 1800000/* 30min /, httpOnly: true, path: '/user', signed: true});
 			res.redirect('/user');
-		});
+		});*/
 	});
 });
 
-// validate email adress
+// validate email adress also on server side (because javascript in frontend can be deactivated)
 function validateEmail(email) {
 	// another email regex
 	// [a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?

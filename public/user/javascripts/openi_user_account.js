@@ -26,15 +26,23 @@ function onClickRegisterButton() {
 
    var username        = $(" #_openi_username").val();
    var email               = $("#_openi_email").val();
+   var confirmEmail   = $("#_openi_conf_email").val();
    var password        = $(" #_openi_passwd").val();
    var confirmPassword = $(" #_openi_conf_passwd").val();
    var validated       = true;
    var error           = null;
 
-   if ( !validateEmail(email) ){
+   if(email === "" || confirmEmail === "") {
+      error=("Please provide a email adress and confirm this");
+      validated = false;
+   } else if (!validateEmail(email)){
       error=("Please provide an valid email adress");
       validated = false;
-   }
+   } else if(!validateEmail(confirmEmail) || email !== confirmEmail){
+      error=("Your email and confirm email do not match");
+      validated = false;
+   }   
+
    if (username === "") {      
       if (password === "" && confirmPassword ==="") {
          error=("Please provide correct credentials");

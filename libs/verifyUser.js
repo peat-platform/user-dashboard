@@ -1,8 +1,9 @@
 'use strict'
 
-var when 				= require('when'),
-	uuid 				= require('node-uuid'),
-	nodemailer 			= require('nodemailer');
+var when 			= require('when'),
+	uuid 			= require('node-uuid'),
+	nodemailer 	= require('nodemailer'),
+	redis			= require('../util/redisConnection');
 
 // ---------------------------------------------------------------------------
 /*
@@ -13,7 +14,10 @@ var when 				= require('when'),
  /*
  var smtpPool 	= require('nodemailer-smtp-pool');
 
- var transport = nodemailer.createTransport(smtpPool({
+// create reusable transporter object using SMTP transport. 
+// NB! No need to recreate the transporter object. You can use 
+// the same transporter object for all e-mails
+ var transporter = nodemailer.createTransport(smtpPool({
     host: 'localhost',
     port: 25,
     auth: {
@@ -38,6 +42,9 @@ var when 				= require('when'),
 /*
 var sendmailTransport 	= require('nodemailer-sendmail-transport');
 
+// create reusable transporter object using SMTP transport. 
+// NB! No need to recreate the transporter object. You can use 
+// the same transporter object for all e-mails
 var transporter = nodemailer.createTransport(sendmailTransport({
     path: '/usr/share/sendmail',
     args: [
@@ -50,6 +57,7 @@ var transporter = nodemailer.createTransport(sendmailTransport({
 
 // ---------------------------------------------------------------------------
 
+// googlemail account just to testing the verification mail
 var senderMail = 'verify.test.openi@gmail.com';
 
 // create reusable transporter object using SMTP transport. 
@@ -70,58 +78,69 @@ var transporter = nodemailer.createTransport({
 var generateVerificationSet = function( username, usermail ) 
 {
       return when.promise(function(resolve, reject) {
+      		var verificationToken = uuid.v4(); 		//Simple generation of RFC4122 UUIDS, v4 = (random) id, v1 = (timebased) id
 		var verificationSet = 
 		{
 			activated : false,						// activation flag 
 			user : username,						// username of user
 			mail : usermail,							// user mail adress
 			timestamp : new Date().getTime(),		// actual time in milis
-			token : uuid.v4() 						// Simple generation of RFC4122 UUIDS, v4 = (random) id, v1 = (timebased) id
+			token :  verificationToken				// unique verification token
 		};
-
-		// TODO !!!  Write 2 DB -> ( user, mail, timestamp, token, activated ); !!! 
-
-		if( /* write 2 DB is ready */ true )
-		{
-			resolve( verificationSet );	
-		} else {
-			reject( /*nastyError*/ );
-		}
+		redis.set(username, JSON.stringify(verificationSet) );
+		redis.get(username, function (err, result) {
+			if(!err) {
+				resolve( verificationSet );
+			} else reject( err );
+		});
 	});      
 };
 
 /*
  * build up and send mail to registered user email with unique activation url.
  */
-var sendVerificationMail = function( verificationSet ) 
+var sendVerificationMail = function( rootDomain, verificationSet ) 
 {
-	// unique verification url for mail verification / account activation
-	var userVerificationURL = 'localhost:3000' + '/verify/'+verificationSet.token;
+	return when.promise(function(resolve, reject) {
+		// unique verification url for mail verification / account activation
+		var userVerificationURL = rootDomain + '/verify/'+verificationSet.token+'/'+verificationSet.user;
 
-	// An example users object with formatted email function
-	var verifyUser = {
-		email: verificationSet.mail,
-		subject: '✔ Please verify your email - PEAT platform',
-		html: 	'<b>Hello '+verificationSet.user+' ✔</b>,'+
-				'</br>'+
-				'<p>Please Confirm your E-mail by clicking the link below.</p>'+
-				'<a href="'+userVerificationURL+'">'+userVerificationURL+'</a>' // html body,
-	};
+		// An example users object with formatted email function
+		var verifyUser = {
+			email: verificationSet.mail,
+			subject: '✔ Please verify your email - PEAT platform',
+			html: 	'<b>Hello '+verificationSet.user+' ✔</b>,'+
+					'</br>'+
+					'<p>Please verify your E-mail by clicking the verification link below.</p>'+
+					'<a href="'+userVerificationURL+'">'+userVerificationURL+'</a>' // html body,
+		};
 
 
-	transporter.sendMail({
-		from: 'Peat-platform Verification<'+senderMail+'>',		// sender address
-		to: verifyUser.email,									// receiver mail
-		subject: verifyUser.subject,							// mail subject
-		html: verifyUser.html									// html body
-	}, function(err, info) {
-		if (err) {
-			console.log(err);
-		} else {
-			console.log('Message sent: ' + info.response);
-		}
-	});
+		transporter.sendMail({
+			from: 'Peat-platform Verification<'+senderMail+'>',		// sender address
+			to: verifyUser.email,										// receiver mail
+			subject: verifyUser.subject,									// mail subject
+			html: verifyUser.html										// html body
+		}, function(err, info) {
+			if (err) {
+				reject(err);
+			} else {
+				resolve('Mail sent: ' + info.response);
+			}
+		});
+	}); 
 }
 
+var deleteExpiredVerificationCredentials = function( username )
+{
+	return when.promise(function(resolve, reject) {
+		redis.del( username, function(err, result){
+			if(err) reject(err);
+			resolve(result);
+		});
+	}); 
+}
+
+module.exports.deleteExpiredVerificationCredentials = deleteExpiredVerificationCredentials;
 module.exports.generateVerificationSet = generateVerificationSet;
 module.exports.sendVerificationMail = sendVerificationMail;

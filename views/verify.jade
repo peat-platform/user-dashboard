@@ -7,9 +7,14 @@ block content
 		div.panel-body
 			if(error)
 				.alert.alert-danger #{error}
+			if(newLink)
+				.alert.alert-info #{newLink}
 			else
 				h4 Congratulations and welcome to PEAT
 				div Your email is now successful verified and activated to the PEAT-platform.
+				div You can now login and access all PEAT-features. 
+					a(rel='follow', href='/login') go to login
+
 
 
 
