@@ -1,5 +1,6 @@
 var request 	= require('request');
 var express 	= require('express');
+var util			= require('util');
 
 var verifyUser 	= require('../libs/verifyUser');
 var redis		= require('../util/redisConnection');
@@ -12,7 +13,7 @@ router.get('/:token/:username', function(req, res)
 	var verificationSet;
 
 	redis.get(req.params.username, function (err, result) {
-		if(err) console.log(err);
+		if(err) util.log(err);
 		verificationSet = JSON.parse(result);
 
 		var username			= verificationSet.user,				// user from db
@@ -33,17 +34,16 @@ router.get('/:token/:username', function(req, res)
 
 			// gather data for the verification process
 			var rootDomain = req.protocol + '://'+ req.get('Host');
-			console.log( rootDomain ); 
 
 			// delete expired verification credentials from redis DB
 			verifyUser.deleteExpiredVerificationCredentials( token )
 			.then( function( data )
 			{
-				console.log(data);
+				util.log(data);
 			})
-			.otherwise( function(err)
+			.catch( function(err)
 			{
-				console.log(err);
+				util.log(err);
 				// some error happens during the deletion of old verification credentials
 				res.render('error', {error : error});
 			});
@@ -60,7 +60,7 @@ router.get('/:token/:username', function(req, res)
 				verifyUser.sendVerificationMail( rootDomain, verificationSet)
 				.then( function(data) 
 				{
-					console.log(data);
+					util.log(data);
 					res.render('verify', 
 					{
 						error : 'Your verification code is expired.',
@@ -68,14 +68,14 @@ router.get('/:token/:username', function(req, res)
 						newLink : 'You\'ve got a new verification mail, please verify your mail adress in the next 30 min.'
 					})
 				})
-				.otherwise( function(err)
+				.catch( function(err)
 				{	// some error happens during the send verification mail
-					res.render('error', {error : error});
+					res.render('error', {error : err});
 				});
 			})
-			.otherwise( function(err)
+			.catch( function(err)
 			{	// some error happens during the verification generation
-				res.render('error', {error : error});
+				res.render('error', {error : err});
 			});
 			return;
 		}

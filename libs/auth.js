@@ -1,7 +1,7 @@
 var request = require('request');
 
-var base = 'https://' + 'demo2.openi-ict.eu' + ':443/api/v1/auth';
-//var base = 'https://' + '127.0.0.1' + ':443/api/v1/auth';
+
+var base = 'https://' + '127.0.0.1' + ':443/api/v1/auth';
 //var base = '/api/v1/auth';
 
 function IsJsonString(str) {

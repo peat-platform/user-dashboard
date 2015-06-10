@@ -1,6 +1,7 @@
 var request 	= require('request');
 var auth 		= require('../libs/auth');
 var express 	= require('express');
+var util			= require('util');
 
 var verifyUser 	= require('../libs/verifyUser');
 var redis		= require('../util/redisConnection');
@@ -49,7 +50,6 @@ router.post('/', function(req, res)
 
 		// gather data for the verification process
 		var rootDomain = req.protocol + '://'+ req.get('Host');
-		console.log( rootDomain ); 
 
 		/* 
 		 *	Creates a unique hash and timestamp for verification mail. Sign user as "activated = false".
@@ -64,17 +64,17 @@ router.post('/', function(req, res)
 			verifyUser.sendVerificationMail( rootDomain, verificationSet)
 			.then( function(data) 
 			{
-				console.log(data);
+				util.log(data);
 				res.render('login', {error : 'You got an verification mail. Please confirm your email by using the link provided in this verification mail.', register : true});
 			})
-			.otherwise( function(err) // some error happens during the send verification mail
+			.catch( function(err) // some error happens during the send verification mail
 			{
-				res.render('error', {error : error});
+				res.render('error', {error : err});
 			});
 		})
-		.otherwise( function(err)
+		.catch( function(err)
 		{		// some error happens during the verification generation
-			res.render('error', {error : error});
+			res.render('error', {error : err});
 		});
 
 

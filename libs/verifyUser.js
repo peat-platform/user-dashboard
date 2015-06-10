@@ -115,7 +115,6 @@ var sendVerificationMail = function( rootDomain, verificationSet )
 					'<a href="'+userVerificationURL+'">'+userVerificationURL+'</a>' // html body,
 		};
 
-
 		transporter.sendMail({
 			from: 'Peat-platform Verification<'+senderMail+'>',		// sender address
 			to: verifyUser.email,										// receiver mail
@@ -136,7 +135,8 @@ var deleteExpiredVerificationCredentials = function( username )
 	return when.promise(function(resolve, reject) {
 		redis.del( username, function(err, result){
 			if(err) reject(err);
-			resolve(result);
+			resolve('Old verification creddentials deleted: '+ result);
+
 		});
 	}); 
 }
