@@ -24,10 +24,12 @@ $('#typesmain ul li a').click(function(){
       success: function (data) {
          for ( var i = 0; i < data.result.length; i++){
             var id = data.result[i]['@id'][1];
-            $("#id_list").append('<li><a href="#">' + id + '</a></li>' );
+            $("#id_list").append('<li><a href="#" name="' + id + '"></a></li>' );
          }
 
+         updateEntryIds();
          $("ul#id_list li a").click(display_object_function)
+         clickFirstIfSingle("#id_list li a")
       },
       error: function (data) {
          console.log(data)
@@ -36,6 +38,34 @@ $('#typesmain ul li a').click(function(){
 
    return false
 });
+
+
+var idToStr = function(id){
+   var hex       = id.substring(1,13).replace('-', '')
+   var timeStamp = parseInt(hex, 16)
+   var date      = new Date(timeStamp)
+   var dateStr   = date.toLocaleString()
+
+   return "Entry: " + dateStr.substring(0, dateStr.length -3)
+}
+
+
+var updateEntryIds = function(){
+   $("#id_list li a").each(function(){
+      var elm       = $(this);
+      var id        = elm.attr('name')
+      var display   = idToStr(id)
+      elm.html(display)
+   })
+}
+
+
+var clickFirstIfSingle = function(id){
+   var arr = $(id)
+   if (1 === arr.length){
+      arr[0].click()
+   }
+}
 
 
 $(window).load(function(){
@@ -64,6 +94,8 @@ $(window).load(function(){
          }
       });
    })
+
+   clickFirstIfSingle('#typesmain ul li a')
 })
 
 var typeMemberToContext = function(type){
@@ -77,8 +109,8 @@ var typeMemberToContext = function(type){
 
 var display_object_function = function(){
 
-   var id   = $(this).html();
-   var auth = $("#session").val();
+   var id    = $(this).attr('name');
+   var auth  = $("#session").val();
    var cloud = $("#cloudlet").val();
 
    $.ajax({
@@ -94,9 +126,10 @@ var display_object_function = function(){
          //$("#data").html("asdf")
          $("#displayContainer").show()
          var type         = typeCache[data['@openi_type']]
+
          var type_mapping = typeMemberToContext(type)
 
-         $("#displayedEntryTitle").html(type['@reference'] + " (" + id + ")")
+         $("#displayedEntryTitle").html(type['@reference'] + " (" + idToStr(id) + ")")
          $("#displayedEntryTitle").attr('name', id)
          $('#data_table tbody').html('')
          for ( i in data['@data']){
@@ -120,7 +153,7 @@ var display_object_function = function(){
 $("#deleteEntryButton").click(function(){
    var objId = $("#displayedEntryTitle").attr('name')
 
-   $('#exampleModal').find('.modal-title').text('Delete ' + objId)
+   $('#exampleModal').find('.modal-title').text('Delete Entry ' + idToStr(objId))
    $('#exampleModal').find('.modal-body').html("Deleting data outside of its application may negatively effect your " +
       "user experience with that application. Are you sure you want to delete this Data Entry?")
 
@@ -144,7 +177,7 @@ $('#exampleModal .okay-button').click(function() {
       dataType: 'json',
       success: function (data) {
          $("#displayContainer").hide()
-         $("#id_list li a:contains('" + objId + "')").parent().remove()
+         $("#id_list li a[name='" + objId + "']").parent().remove()
          $('#exampleModal').modal('hide');
       },
       error: function (data) {

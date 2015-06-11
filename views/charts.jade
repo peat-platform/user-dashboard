@@ -3,9 +3,9 @@ extends layout
 block content
     div.panel.panel-default
         div.panel-body
-        h3 Access log
-        div This page lists the amount of times that your data is accessed and who is accessing it.
-            .row.hidden
+            h3 Access log
+            div This page lists the amount of times and the dates that your data was accessed; it also lists the apps and companies that are accessing it.
+            .row.hidden.table
                 .col-md-8.col-md-offset-2
                     table.table.table-striped.table-bordered#app
                         caption Track By App
@@ -14,7 +14,7 @@ block content
                                 th APP
                                 th Requests
                         tbody
-            .row.hidden
+            .row.hidden.table
                 .col-md-8.col-md-offset-2
                     table.table.table-striped.table-bordered#company
                         caption Track By Company
@@ -23,7 +23,7 @@ block content
                                 th APP
                                 th Requests
                         tbody
-            .row.hidden
+            .row.hidden.table
                 .col-md-8.col-md-offset-2
                     table.table.table-striped.table-bordered#loc
                         caption Track By Location
@@ -32,7 +32,7 @@ block content
                                 th APP
                                 th Requests
                         tbody
-            .row.hidden
+            .row.hidden.table
                 .col-md-8.col-md-offset-2
                     table.table.table-striped.table-bordered#obj
                         caption Track By Object
@@ -42,7 +42,7 @@ block content
                                 th Requests
                                 th Object ID
                         tbody
-            .row
+            .row.chart
                 table.table.table-striped.table-bordered#visits(style="position: absolute; left: -9999em;")
                     caption Visits
                     thead
@@ -54,35 +54,35 @@ block content
                             tr
                                 td= index
                                 td= val
-            .row
+            .row.chart
                 .col-md-8.col-md-offset-2
                     #visitChartContainer
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 hr
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 .col-md-8.col-md-offset-2
                     #companyChartContainer
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 hr
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 .col-md-8.col-md-offset-2
                     #appChartContainer
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 hr
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 .col-md-8.col-md-offset-2
                     #objChartContainer
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 hr
-            .row &nbsp;
-            .row
+            .row.chart &nbsp;
+            .row.chart
                 .col-md-8.col-md-offset-2
                     #locChartContainer
 
@@ -134,12 +134,25 @@ block content
                         type: 'pie'
                     },
                     title: {
-                        text: 'Requests Per Company'
+                        text: 'Percentage of Requests Per Company'
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.f} %'
+                            }
+                        }
                     },
                     yAxis: {
                         allowDecimals: false,
                         title: {
-                            text: 'Requests'
+                            text: 'Data Accesses'
                         },
                         min: 0
                     },
@@ -155,12 +168,15 @@ block content
                         type: 'column'
                     },
                     title: {
-                        text: 'Requests Per App'
+                        text: 'Amount of Data Entries Accessed Per App'
+                    },
+                    legend: {
+                        enabled: false
                     },
                     yAxis: {
                         allowDecimals: false,
                         title: {
-                            text: 'Requests'
+                            text: 'Number of Data Entries Accessed'
                         },
                         min: 0
                     },
@@ -177,12 +193,15 @@ block content
                         type: 'column'
                     },
                     title: {
-                        text: 'Requests Per Object'
+                        text: 'Amount of Data Entries Accessed Per Data Type'
+                    },
+                    legend: {
+                        enabled: false
                     },
                     yAxis: {
                         allowDecimals: false,
                         title: {
-                            text: 'Requests'
+                            text: 'Number of Data Entries Accessed'
                         },
                         min: 0
                     },
@@ -198,12 +217,15 @@ block content
                         type: 'column'
                     },
                     title: {
-                        text: 'Requests Per Location'
+                        text: 'Country from which your data was accessed'
+                    },
+                    legend: {
+                        enabled: false
                     },
                     yAxis: {
                         allowDecimals: false,
                         title: {
-                            text: 'Requests'
+                            text: 'Number of Data Entries Accessed'
                         },
                         min: 0
                     },
@@ -219,12 +241,15 @@ block content
                         type: 'line'
                     },
                     title: {
-                        text: 'Requests Over Time'
+                        text: 'Amount of Data Entries Accessed Per Day'
+                    },
+                    legend: {
+                        enabled: false
                     },
                     yAxis: {
                         allowDecimals: false,
                         title: {
-                            text: 'Requests'
+                            text: 'Number of Data Entries Accessed'
                         },
                         min: 0
                     },
