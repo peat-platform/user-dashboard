@@ -27,7 +27,8 @@ module.exports = function(cmd_args) {
 
             res.render('addSubscription', {
                user     : decoded.user_id,
-               'session': req.signedCookies.session
+               session  : req.signedCookies.session,
+               cloudlet : decoded.cloudlet
             });
 
 
