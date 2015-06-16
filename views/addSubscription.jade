@@ -9,11 +9,11 @@ block content
                 div.col-md-4.column
                     div.SubscriptionForm
                         p Cloudlet Id:
-                        input#cloudletID(type="text")
+                        input#cloudletID(type="text",placeholder="#{cloudlet}")
                         p Type Id:
                         input#typeID(type="text")
                         p Object Id:
-                        input#objectID(type="text")
+                        input#objectID(type="text",placeholder="Optional")
                         p Notification Type
                         select#notifType
                             option(key="sse") Server-Sent Event
