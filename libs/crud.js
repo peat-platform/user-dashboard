@@ -32,6 +32,11 @@ function create(db, json, cb)
 	crud('POST', base + '/' + db, json, cb);
 }
 
+function get(url, auth, cb)
+{
+	crud('GET', url, null, cb, auth);
+}
+
 function createNamed(db, id, json, cb)
 {
 	crud('POST', base + '/' + db + '/' + id, json, cb);
@@ -77,4 +82,5 @@ module.exports.remove = remove;
 module.exports.patch = patch;
 module.exports.upsert = upsert;
 module.exports.query = query;
+module.exports.get   = get;
 module.exports.base = base;

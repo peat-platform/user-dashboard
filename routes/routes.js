@@ -14,6 +14,7 @@ var wrap = function(args){
    var addSubscription  = require('./addSubscription')(args);
    var apps             = require('./apps')(args);
    var charts           = require('./charts')(args);
+   var ajax             = require('./ajax')(args);
    var data             = require('./data')(args);
    var login            = require('./login')(args);
    var logout           = require('./logout')(args);
@@ -24,6 +25,7 @@ var wrap = function(args){
    router.use('/',                  index);
    router.use('/addSubscription',   addSubscription);
    router.use('/charts',            charts);
+   router.use('/ajax',              ajax);
    router.use('/data',              data);
    router.use('/apps',              apps);
    router.use('/dashboard',         index);

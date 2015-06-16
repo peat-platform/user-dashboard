@@ -107,6 +107,13 @@ var typeMemberToContext = function(type){
    return mapping;
 }
 
+var getEditButtonHTML = function(obj_id, app_cid, app_id, perms){
+   return '<div class="btn-group btn-group-sm">' +
+   '<button type="button" class="btn editPermsButton" data="' + obj_id + "+" + app_cid + "+" + app_id + '" perms="' +
+      perms +
+   '" >Modify</button></div>'
+}
+
 var display_object_function = function(){
 
    var id    = $(this).attr('name');
@@ -114,7 +121,7 @@ var display_object_function = function(){
    var cloud = $("#cloudlet").val();
 
    $.ajax({
-      url: '/api/v1/objects/' + cloud + "/" + id ,
+      url: '/user/ajax/objects/' + cloud + "/" + id ,
       type: 'GET',
       data: {},
       headers: {
@@ -122,24 +129,78 @@ var display_object_function = function(){
          "Authorization" : auth
       },
       dataType: 'json',
-      success: function (data) {
+      success: function (resp) {
          //$("#data").html("asdf")
-         $("#displayContainer").show()
-         var type         = typeCache[data['@openi_type']]
+         var data  = resp.obj
+         var meta  = resp.meta
+         var perms = resp.perms
 
+
+         $("#displayContainer").show()
+
+         var type         = typeCache[data['@openi_type']]
          var type_mapping = typeMemberToContext(type)
 
          $("#displayedEntryTitle").html(type['@reference'] + " (" + idToStr(id) + ")")
          $("#displayedEntryTitle").attr('name', id)
+
          $('#data_table tbody').html('')
-         for ( i in data['@data']){
+         $('#data_table_meta tbody').html('')
+         $('#data_table_perms tbody').html('')
+
+         for ( var i in data['@data']){
             $('#data_table > tbody:last').append('<tr><td>' + type_mapping[i] +'</td><td>'+ data['@data'][i] +'</td></tr>');
          }
          $('#data_table').bootstrapTable()
 
-         //$("#data").html(JSON.stringify(data['@data'], undefined, 2))
-         //delete data['@data']
-         //$("#meta_data").html(JSON.stringify(data, undefined, 2))
+
+         for ( var i in meta){
+            $('#data_table_meta > tbody:last').append('<tr><td>' + meta[i].key +'</td><td>'+ meta[i].value +'</td></tr>');
+         }
+         $('#data_table_meta').bootstrapTable()
+
+         for ( var i in perms){
+            $('#data_table_perms > tbody:last').append('<tr><td>' + perms[i].key +'</td><td>'+ perms[i].value +'</td><td>'+ getEditButtonHTML(id, perms[i].cid, perms[i].id, perms[i].value) +'</td></tr>');
+         }
+
+         $('#data_table_perms').bootstrapTable()
+
+         $('.editPermsButton').click(function(){
+            var button = $(this)
+            var data   = button.attr('data')
+            var perms  = button.attr('perms')
+
+            var dataP = data.split("+")
+
+            var obj_id = dataP[0]
+            var cid_id = dataP[1]
+            var app_id = dataP[2]
+
+            var perms = perms.split(",")
+
+            //console.log(obj_id, cid_id, app_id)
+            //console.log(perms)
+
+            var c = $.inArray("create", perms)
+            var r = $.inArray("read",   perms)
+            var u = $.inArray("update", perms)
+            var d = $.inArray("delete", perms)
+
+            var p = "<ul>"
+            p += '<li><input style="list-style:none;" type="checkbox" name="create" value="create" checked="' + c + '"> create</li>'
+            p += '<li><input style="list-style:none;" type="checkbox" name="read"   value="read"   checked="' + r + '"> read</li>'
+            p += '<li><input style="list-style:none;" type="checkbox" name="update" value="update" checked="' + u + '"> update</li>'
+            p += '<li><input style="list-style:none;" type="checkbox" name="delete" value="delete" checked="' + d + '"> delete</li>'
+            p += "</ul>"
+
+            $('#modifyModal').find('.modal-title').text('Modify Permissions')
+            $('#modifyModal').find('.modal-body').html("Modifying permissions for a specific object may negatively effect your " +
+               "user experience with that application. Please continue with caution.<br/><br/><br/>" + p)
+            $('#modifyModal').find('.okay-button').html("Save")
+
+            $('#modifyModal').modal('show');
+
+         })
       },
       error: function (data) {
          console.log(data)
@@ -156,9 +217,18 @@ $("#deleteEntryButton").click(function(){
    $('#exampleModal').find('.modal-title').text('Delete Entry ' + idToStr(objId))
    $('#exampleModal').find('.modal-body').html("Deleting data outside of its application may negatively effect your " +
       "user experience with that application. Are you sure you want to delete this Data Entry?")
-
+   $('#exampleModal').find('.okay-button').html("Delete")
    $('#exampleModal').modal('show');
 })
+
+
+$('#modifyModal .okay-button').click(function() {
+
+   $('#modifyModal').modal('hide');
+   console.log("Persist Changes")
+   //check if different.
+   //grab apt data then persist to backend.
+});
 
 
 $('#exampleModal .okay-button').click(function() {
@@ -181,7 +251,7 @@ $('#exampleModal .okay-button').click(function() {
          $('#exampleModal').modal('hide');
       },
       error: function (data) {
-         console.log(data)
+         //console.log(data)
          $('#exampleModal').modal('hide');
       }
    });
