@@ -10,7 +10,6 @@ var router  = express.Router();
 
 module.exports = function(cmd_args) {
 
-   var seckeyenc = cmd_args.seckeyenc;
    var user_dash_public_key = cmd_args.auth_server_public_key.replace(/'/g, "").replace(/"/g, '').replace(/\\n/g, "\n");
 
    return function (req, res, next) {

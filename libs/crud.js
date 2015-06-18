@@ -32,6 +32,11 @@ function create(db, json, cb)
 	crud('POST', base + '/' + db, json, cb);
 }
 
+function post(url, data, auth, cb)
+{
+	crud('POST', url, data, cb, auth);
+}
+
 function get(url, auth, cb)
 {
 	crud('GET', url, null, cb, auth);
@@ -72,15 +77,16 @@ function query(query, cb)
 	crud('POST', base + '/query', query, cb);
 }
 
-module.exports.crud = crud;
+module.exports.crud   = crud;
 module.exports.create = create;
 module.exports.createNamed = createNamed;
-module.exports.read = read;
+module.exports.read   = read;
 module.exports.readUserCloudlets = readUserCloudlets;
 module.exports.update = update;
 module.exports.remove = remove;
-module.exports.patch = patch;
+module.exports.patch  = patch;
 module.exports.upsert = upsert;
-module.exports.query = query;
-module.exports.get   = get;
-module.exports.base = base;
+module.exports.query  = query;
+module.exports.get    = get;
+module.exports.post   = post;
+module.exports.base   = base;

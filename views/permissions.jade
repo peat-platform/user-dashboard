@@ -4,9 +4,8 @@ block content
 	<script src="/user/javascripts/bootstrap-table.js"></script>
 	div.panel.panel-default
 		div.panel-body
-			h3 Apps Dashboard
-			div This page lists the apps that have access to your data and shows which data records each
-				| app can access. It also allows you to revoke an apps access rights.
+			h3 Permissions
+			div This page lists the type of data this app can access and the type of access. It also allows you to revoke an apps access rights.
 				<div id="exampleModal" class="modal fade bs-example-modal-lg" role="dialog">
 				<div class="modal-dialog modal-lg">
 				<div class="modal-content">
@@ -23,25 +22,31 @@ block content
 				</div><!-- /.modal-content -->
 				</div><!-- /.modal-dialog -->
 			</div><!-- /.modal -->
-			<div id="typesmain" class="wrapper">
-			<div>
-			<h5>Applications </h5>
+			div
+				br
+				//each p in perms
+				//	div.panel.panel-default
+				//		div.panel-body
+				//			div
+				//				b= p.type
+				//			div= p.ref
+				//			div= p.access_type
+				//			div= p.access_level
 
-			each c in clients
-				div.panel.panel-default
-					div.panel-body
-							div
-								b= c.name
-							div= c.description
-							br
-							button.btn.btn-default.btn-sm.viewPermissions(cid = c.cloudlet, api_key = c.api_key) View Permissions
-			</div>
-			<div>
-			</div>
-			<br/>
-			script(type='text/javascript', src="/user/javascripts/md5.js")                                                                                            script(type = 'text/javascript', src = "/user/javascripts/data.js")
+			div !{permsHTML}
+
+			div.text-center(style="white-space:nowrap; width:99%;")
+				div.btn-group.btn-group-lg(role="group" style="white-space:nowrap;")
+					if !empty
+						button#modifyPermsButton.btn(type="button" key="#{api_key}" cid="#{cid}" style="width:115px;") Update
+					if reset
+						button#resetPermsButton.btn(type="button" key="#{api_key}" cid="#{cid}" style="width:115px;") Reset
+					if !empty
+						button#revokePermsButton.btn.btn-danger(type="button" key="#{api_key}" cid="#{cid}" style="width:115px;") Revoke
+
+			script(type='text/javascript', src="/user/javascripts/md5.js")
 			link(rel='stylesheet', href='/admin/stylesheets/data.css')
-			script(type='text/javascript', src="/user/javascripts/apps.js")
+			script(type='text/javascript', src="/user/javascripts/permissions.js")
 
 			<input type="hidden" id="session" name="session" value="#{session}">
 			<input type="hidden" id="cloudlet" name="cloudlet" value="#{cloudlet}">

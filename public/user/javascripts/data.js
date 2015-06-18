@@ -98,6 +98,7 @@ $(window).load(function(){
    clickFirstIfSingle('#typesmain ul li a')
 })
 
+
 var typeMemberToContext = function(type){
    var mapping = {}
    for (var i = 0; i < type['@context'].length; i++){
@@ -107,12 +108,14 @@ var typeMemberToContext = function(type){
    return mapping;
 }
 
+
 var getEditButtonHTML = function(obj_id, app_cid, app_id, perms){
    return '<div class="btn-group btn-group-sm">' +
    '<button type="button" class="btn editPermsButton" data="' + obj_id + "+" + app_cid + "+" + app_id + '" perms="' +
       perms +
    '" >Modify</button></div>'
 }
+
 
 var display_object_function = function(){
 
@@ -176,27 +179,36 @@ var display_object_function = function(){
             var cid_id = dataP[1]
             var app_id = dataP[2]
 
-            var perms = perms.split(",")
+            var perms = perms.split(", ")
 
             //console.log(obj_id, cid_id, app_id)
             //console.log(perms)
 
-            var c = $.inArray("create", perms)
-            var r = $.inArray("read",   perms)
-            var u = $.inArray("update", perms)
-            var d = $.inArray("delete", perms)
+            var c = -1 !== $.inArray("create", perms)
+            var r = -1 !== $.inArray("read",   perms)
+            var u = -1 !== $.inArray("update", perms)
+            var d = -1 !== $.inArray("delete", perms)
 
-            var p = "<ul>"
-            p += '<li><input style="list-style:none;" type="checkbox" name="create" value="create" checked="' + c + '"> create</li>'
-            p += '<li><input style="list-style:none;" type="checkbox" name="read"   value="read"   checked="' + r + '"> read</li>'
-            p += '<li><input style="list-style:none;" type="checkbox" name="update" value="update" checked="' + u + '"> update</li>'
-            p += '<li><input style="list-style:none;" type="checkbox" name="delete" value="delete" checked="' + d + '"> delete</li>'
+            var dataC = {ref : obj_id, type : "object", access_level: "APP", access_type: "CREATE"}
+            var dataR = {ref : obj_id, type : "object", access_level: "APP", access_type: "READ"}
+            var dataU = {ref : obj_id, type : "object", access_level: "APP", access_type: "UPDATE"}
+            var dataD = {ref : obj_id, type : "object", access_level: "APP", access_type: "DELETE"}
+
+            var p = '<ul id="perms_list">'
+            p += '<li><input style="list-style:none;" type="checkbox" name="create" value=\'' + JSON.stringify(dataC) + '\'' + ((c) ? ' checked="true" ' : '') + '> create</li>'
+            p += '<li><input style="list-style:none;" type="checkbox" name="read"   value=\'' + JSON.stringify(dataR)  + '\'' + ((r) ? ' checked="true" ' : '') + '> read</li>'
+            p += '<li><input style="list-style:none;" type="checkbox" name="update" value=\'' + JSON.stringify(dataU)  + '\'' + ((u) ? ' checked="true" ' : '') + '> update</li>'
+            p += '<li><input style="list-style:none;" type="checkbox" name="delete" value=\'' + JSON.stringify(dataD)  + '\'' + ((d) ? ' checked="true" ' : '') + '> delete</li>'
             p += "</ul>"
 
             $('#modifyModal').find('.modal-title').text('Modify Permissions')
             $('#modifyModal').find('.modal-body').html("Modifying permissions for a specific object may negatively effect your " +
                "user experience with that application. Please continue with caution.<br/><br/><br/>" + p)
             $('#modifyModal').find('.okay-button').html("Save")
+
+            $('#modifyModal').attr("cid", cid_id)
+            $('#modifyModal').attr("aid", app_id)
+            $('#modifyModal').attr("oid", obj_id)
 
             $('#modifyModal').modal('show');
 
@@ -225,9 +237,43 @@ $("#deleteEntryButton").click(function(){
 $('#modifyModal .okay-button').click(function() {
 
    $('#modifyModal').modal('hide');
-   console.log("Persist Changes")
-   //check if different.
-   //grab apt data then persist to backend.
+
+   var but = $(this)
+   var id  = but.attr("key")
+   var cid = but.attr("cid")
+
+   var updatedPerms = []
+
+   var cid = $('#modifyModal').attr("cid")
+   var aid = $('#modifyModal').attr("aid")
+   var oid = $('#modifyModal').attr("oid")
+
+   $("#perms_list input").each(function(){
+      var inp = $(this)
+      if (inp.prop( "checked")){
+         var p = JSON.parse(inp.val())
+         updatedPerms.push(p)
+      }
+      else{
+         //console.log("not", inp.val())
+      }
+   })
+
+   var perms = {modify_object : true, permissions : updatedPerms}
+
+   $.ajax({
+      url: "/user/permsupdate?api_key=" + aid + "&cid=" + cid,
+      type: 'POST',
+      data: JSON.stringify(perms),
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(result){
+         if (result.status === "ok"){
+            $(location).attr('href', "/user/data");
+         }
+         $('#exampleModal').modal('hide');
+      }
+   })
 });
 
 
@@ -251,12 +297,9 @@ $('#exampleModal .okay-button').click(function() {
          $('#exampleModal').modal('hide');
       },
       error: function (data) {
-         //console.log(data)
          $('#exampleModal').modal('hide');
       }
    });
 
-
    $('#exampleModal').modal('hide');
-
 });

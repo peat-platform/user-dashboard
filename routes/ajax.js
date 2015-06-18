@@ -148,6 +148,9 @@ module.exports = function (cmd_args) {
                         //console.log("err",    err)
                         //console.log("result", JSON.stringify(result, null, 2))
 
+                        //console.log("sql",    sql)
+                        //console.log("result", result)
+
                         var perms = result[0].perms
 
                         var c_ids   = []

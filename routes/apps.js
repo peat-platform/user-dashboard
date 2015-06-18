@@ -62,10 +62,12 @@ module.exports = function (cmd_args) {
                   });
                }
                else {
-                  var clients = [];
-                  var keys = [];
+                  var clients       = [];
+                  var keys          = [];
                   var clients_perms = {};
                   //{name : "Sample App"}, {name : "Family Budget Tracker"}
+
+                  console.log("body", body)
 
                   for ( var i = 0; i < body.rows.length; i++ ) {
                      var client_id = body.rows[i].key[2];
@@ -86,6 +88,8 @@ module.exports = function (cmd_args) {
                      return
                   }
 
+                  console.log("clients_perms", clients_perms)
+
                   getDbLazy("clients", function (db_use, err) {
                      db_use.getMulti(keys, function (err, result) {
                         if ( err ) {
@@ -101,8 +105,8 @@ module.exports = function (cmd_args) {
                            c.perms = clients_perms[c.api_key];
 
                            delete c.secret;
-                           delete c.api_key;
-                           delete c.cloudlet;
+                           //delete c.api_key;
+                           //delete c.cloudlet;
 
                            clients.push(c)
                         }
