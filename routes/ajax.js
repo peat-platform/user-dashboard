@@ -153,6 +153,8 @@ module.exports = function (cmd_args) {
 
                         var perms = result[0].perms
 
+                        //console.log("perms", perms)
+
                         var c_ids   = []
                         var app_ids = []
 
@@ -169,7 +171,8 @@ module.exports = function (cmd_args) {
                         }
 
                         getDbLazy("clients", function(db){
-                           var clientSQL = 'SELECT api_key as id, name as name, cloudlet as cloudlet FROM clients where api_key in ["' + app_ids.join('", "') + '"]';
+                           var clientSQL = 'SELECT api_key as id, isSE, name as name, cloudlet as cloudlet FROM clients' +
+                              ' where api_key in ["' + app_ids.join('", "') + '"]';
 
                            var query = couchbase.N1qlQuery.fromString(clientSQL);
 
@@ -177,7 +180,8 @@ module.exports = function (cmd_args) {
 
                               getDbLazy("users", function(db){
 
-                                 var devQuery = 'SELECT username as developer, cloudlet as cloudlet FROM users where cloudlet in ["' + c_ids.join('", "') + '"]';
+                                 var devQuery = 'SELECT username as developer, cloudlet as cloudlet FROM users where ' +
+                                    'cloudlet in ["' + c_ids.join('", "') + '"]';
 
                                  var query    = couchbase.N1qlQuery.fromString(devQuery);
 
@@ -187,22 +191,34 @@ module.exports = function (cmd_args) {
                                     //console.log("result", JSON.stringify(dev_result, null, 2))
                                     //console.log("result", JSON.stringify(obj, null, 2))
                                     //console.log("result >>> ", dev_result)
+                                    //console.log("perms  >>> ", perms)
 
                                     var meta = [
-                                       { key : "Create by Developer:",   value : getDevName(perms.created_by, dev_result)},
+                                       { key : "Create by Developer:",   value : getDevName(perms.created_by,     dev_result)},
                                        { key : "Create in Application:", value : getAppName(perms.created_by_app, client_result)},
                                        { key : "Create Date:",           value : dateToHRF(obj._date_created)},
                                        { key : "Last Modified:",         value : dateToHRF(obj._date_modified)}
                                     ]
 
+
+                                    for (var i in client_result){
+                                       var c = client_result[i]
+                                       if (c.isSE){
+                                          var index = app_ids.indexOf(c.id)
+                                          delete app_ids[index]
+                                       }
+                                    }
+
                                     var perms_data = []
 
                                     for (var i in app_ids){
                                        var appId = app_ids[i]
-                                       perms_data.push({ key : getAppName(appId, client_result),
+                                       perms_data.push({
+                                          key   : getAppName(appId, client_result),
                                           value : getAppPermsStr(appId, perms),
                                           cid   : getAppCloudlet(appId, client_result),
-                                          id    : appId})
+                                          id    : appId
+                                       })
                                     }
 
 

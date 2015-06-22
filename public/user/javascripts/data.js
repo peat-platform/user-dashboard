@@ -238,9 +238,9 @@ $('#modifyModal .okay-button').click(function() {
 
    $('#modifyModal').modal('hide');
 
-   var but = $(this)
-   var id  = but.attr("key")
-   var cid = but.attr("cid")
+   //var but = $(this)
+   //var id  = but.attr("key")
+   //var cid = but.attr("cid")
 
    var updatedPerms = []
 
@@ -253,9 +253,6 @@ $('#modifyModal .okay-button').click(function() {
       if (inp.prop( "checked")){
          var p = JSON.parse(inp.val())
          updatedPerms.push(p)
-      }
-      else{
-         //console.log("not", inp.val())
       }
    })
 

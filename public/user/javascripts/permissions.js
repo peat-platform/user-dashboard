@@ -1,5 +1,6 @@
 
 $("#modifyPermsButton").click(function(){
+
    var but = $(this)
    var id  = but.attr("key")
    var cid = but.attr("cid")
@@ -17,10 +18,20 @@ $("#modifyPermsButton").click(function(){
 
       $('#exampleModal .okay-button').click(function(){})
 
-      $(".opts input").each(function(){
+      var excludeObjs = []
+
+      $("input[name=remove_override]:checked").each(function(){
+         excludeObjs.push($(this).val())
+      })
+
+      $(".opts input[name!=remove_override]").each(function(){
          var inp = $(this)
          if (inp.prop( "checked")){
             var p = JSON.parse(inp.val())
+
+            if (-1 !== excludeObjs.indexOf(p.id)){
+               return
+            }
 
             updatedPerms.push({
                "ref"          : p.id,
@@ -29,8 +40,14 @@ $("#modifyPermsButton").click(function(){
                "access_type"  : p.action
             })
          }
-         else{
-            //console.log("not", inp.val())
+      })
+
+
+      $(".serviceEnablers input").each(function(){
+         var inp = $(this)
+         if (inp.prop( "checked")){
+            var p = JSON.parse(inp.val())
+            updatedPerms.push(p)
          }
       })
 
@@ -67,7 +84,6 @@ $("#resetPermsButton").click(function(){
    $('#exampleModal .okay-button').html("Reset")
 
    $('#exampleModal .okay-button').click(function(){
-      $('#exampleModal .okay-button').click(function(){})
       $('#exampleModal').modal('hide');
 
       var perms = {reset : true}
@@ -98,8 +114,6 @@ $("#revokePermsButton").click(function(){
    $('#exampleModal .okay-button').html("Revoke")
 
    $('#exampleModal .okay-button').click(function(){
-
-      $('#exampleModal .okay-button').click(function(){})
 
       //var perms = {"permissions" : []}
       var perms = {revoke : true}

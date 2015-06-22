@@ -51,6 +51,8 @@ module.exports = function (cmd_args) {
             var cid = decoded.cloudlet;
             var url = 'http://localhost:8092/permissions/_design/permissions_views/_view/list_permissions_for_cloudlet?startkey=%5B%22' + cid + '%22%5D&endkey=%5B%22' + cid + '%5E%22%5D&inclusive_end=false&reduce=false&stale=false&connection_timeout=60000&limit=10&skip=0';
 
+            //console.log(url)
+
             crud.crud("GET", url, {}, function (err, body) {
 
                if ( err ) {
@@ -67,7 +69,7 @@ module.exports = function (cmd_args) {
                   var clients_perms = {};
                   //{name : "Sample App"}, {name : "Family Budget Tracker"}
 
-                  console.log("body", body)
+                  //console.log("body", body)
 
                   for ( var i = 0; i < body.rows.length; i++ ) {
                      var client_id = body.rows[i].key[2];
@@ -88,14 +90,14 @@ module.exports = function (cmd_args) {
                      return
                   }
 
-                  console.log("clients_perms", clients_perms)
+                  //console.log("clients_perms", JSON.stringify(clients_perms, null, 2))
 
                   getDbLazy("clients", function (db_use, err) {
                      db_use.getMulti(keys, function (err, result) {
                         if ( err ) {
                            //callback(null, { 'error': 'Error creating entity: exists'}, HTTPStatus.CONFLICT);
                            //return;
-                           console.log(error)
+                           //console.log(err)
                         }
 
                         for ( var i in result ) {

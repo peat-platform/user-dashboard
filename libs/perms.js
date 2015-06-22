@@ -204,9 +204,12 @@ var renderPerms = function(app_perms) {
 
       var app_perms = app_perms.result[0]
 
+      //console.log(JSON.stringify(app_perms, null, 2))
+
       //prepare html string based on manifest
       var app_perms_html = '';
       var showjson       = {};
+      var showjsonObj    = {}
       //USE getTypes for BASE 64
 
       if (app_perms.hasOwnProperty("types")) {
@@ -218,6 +221,14 @@ var renderPerms = function(app_perms) {
             var type = typesById[obj.ref];
 
             if (undefined === type) {
+               if (obj.type === "object"){
+                  if (showjsonObj[obj.ref] === undefined) {
+                     showjsonObj[obj.ref] = {}
+                     showjsonObj[obj.ref].id    = obj.ref
+                     showjsonObj[obj.ref].arr   = []
+                  }
+                  showjsonObj[obj.ref].arr.push(obj.access_type);
+               }
                return;
             }
 
@@ -242,9 +253,17 @@ var renderPerms = function(app_perms) {
 
          organiseTypes(typesById, showjson)
 
+         var type_title = "<div class='acc_title'><h4>Data Types</h4></div>"
+
          for (var key in showjson) {
 
+            if (type_title) {
+               app_perms_html += type_title
+               type_title = false
+            }
+
             var entry = showjson[key]
+
             app_perms_html += '<div class="contA panel panel-default"><div class="panel-body"><div style="font-weight: bold">' + entry.name + '</div>';
             app_perms_html += (('APP' === showjson[key].level) ? '' : '<div>This app wants access to data in your account that are created by other apps.</div>' )
             app_perms_html += '<div class="permissionsDetails">';
@@ -261,24 +280,25 @@ var renderPerms = function(app_perms) {
             var u    = -1 !== entry.arr.indexOf("UPDATE")
             var d    = -1 !== entry.arr.indexOf("DELETE")
 
-            var datac = {id:entry.id, level :entry.level, action : "CREATE", type : "type" }
-            var datar = {id:entry.id, level :entry.level, action : "READ",   type : "type" }
-            var datau = {id:entry.id, level :entry.level, action : "UPDATE", type : "type" }
-            var datad = {id:entry.id, level :entry.level, action : "DELETE", type : "type" }
+            var datac = {id:entry.id, level : entry.level, action : "CREATE", type : "type" }
+            var datar = {id:entry.id, level : entry.level, action : "READ",   type : "type" }
+            var datau = {id:entry.id, level : entry.level, action : "UPDATE", type : "type" }
+            var datad = {id:entry.id, level : entry.level, action : "DELETE", type : "type" }
 
-            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datac) + '\' ' + ((c) ? " checked " : "") +  '>CREATE <br/>';
-            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datar) + '\' ' + ((r) ? " checked " : "") +  '>READ   <br/>';
-            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datau) + '\' ' + ((u) ? " checked " : "") +  '>UPDATE <br/>';
-            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datad) + '\' ' + ((d) ? " checked " : "") +  '>DELETE <br/>';
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datac) + '\' ' + ((c) ? " checked " : "") +  '> CREATE <br/>';
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datar) + '\' ' + ((r) ? " checked " : "") +  '> READ   <br/>';
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datau) + '\' ' + ((u) ? " checked " : "") +  '> UPDATE <br/>';
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datad) + '\' ' + ((d) ? " checked " : "") +  '> DELETE <br/>';
 
             app_perms_html += '</div></div>';
 
             app_perms_html += '</div></div></div>';
          }
 
-         var se_title = "<hr/><br/><br/><div class='acc_title'>This App uses the following additional services which depend on accessing the same data.</div>"
+         var se_title = "<div class='acc_title'><h4>Service Enablers</h4></div>"
 
          for (var i = 0; i < app_perms.permissions.length; i++) {
+
             var perm = app_perms.permissions[i]
 
             if ('service_enabler' === perm.type) {
@@ -292,14 +312,65 @@ var renderPerms = function(app_perms) {
                   var se = app_perms.service_enablers[j]
 
                   if (se.name === perm.ref) {
-                     app_perms_html += "<div class='contA'>"
-                     app_perms_html += "<div style='font-weight: bold'><input type='checkbox' value='" + se.name + "' checked='checked'> " + se.name + "</div>"
+                     //var datac = {id:entry.id, level :entry.level, action : "CREATE", type : "type" }
+                     app_perms_html += '<div class="serviceEnablers panel panel-default"><div class="panel-body">'
+                     app_perms_html += "<div style='font-weight: bold'><input type='checkbox' value='" + JSON.stringify(perm) + "' checked='checked'> " + se.name + "</div>"
                      app_perms_html += "<div class='permissionsDetails' style='display: block'>" + se.description + "</div>"
-                     app_perms_html += "</div>"
+                     app_perms_html += "</div></div>"
                   }
                }
             }
          }
+
+         var obj_title = "<div class='acc_title'><h4>Object Overrides</h4></div>"
+
+         for (var id in showjsonObj){
+
+            var entry = showjsonObj[id]
+
+            if (obj_title) {
+               app_perms_html += obj_title
+               obj_title = false
+            }
+
+
+            app_perms_html += '<div class="contA panel panel-default"><div class="panel-body">'
+            app_perms_html += "<div style='font-weight: bold'>" + id + "</div>"
+
+            app_perms_html += '<div class="type_access_requested">Type of access requested by this app:';
+            app_perms_html += '<div class="opts">';
+
+            var c    = -1 !== entry.arr.indexOf("CREATE")
+            var r    = -1 !== entry.arr.indexOf("READ")
+            var u    = -1 !== entry.arr.indexOf("UPDATE")
+            var d    = -1 !== entry.arr.indexOf("DELETE")
+
+            var datac = {id:entry.id, level :"CLOUDLET", action : "CREATE", type : "object" }
+            var datar = {id:entry.id, level :"CLOUDLET", action : "READ",   type : "object" }
+            var datau = {id:entry.id, level :"CLOUDLET", action : "UPDATE", type : "object" }
+            var datad = {id:entry.id, level :"CLOUDLET", action : "DELETE", type : "object" }
+
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datac) + '\' ' + ((c) ? " checked " : "") +  '> CREATE <br/>';
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datar) + '\' ' + ((r) ? " checked " : "") +  '> READ   <br/>';
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datau) + '\' ' + ((u) ? " checked " : "") +  '> UPDATE <br/>';
+            app_perms_html += '<input type="checkbox" name="perms" value=\'' + JSON.stringify(datad) + '\' ' + ((d) ? " checked " : "") +  '> DELETE <br/>';
+            app_perms_html += '<br/>'
+            app_perms_html += '<input type="checkbox" name="remove_override" value=\'' + id + '\'> Remove Object Override <br/>';
+
+            app_perms_html += "</div></div></div></div>"
+
+         }
+
+         for (var i = 0; i < app_perms.permissions.length; i++) {
+
+            var perm = app_perms.permissions[i]
+
+            if ('object' === perm.type){
+
+            }
+         }
+
+         app_perms_html
 
          return app_perms_html;
       }
