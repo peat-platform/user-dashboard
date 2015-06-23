@@ -30,7 +30,7 @@ module.exports = function(cmd_args) {
             subs.getSubscribers(req.signedCookies.session, function (err, body) {
                subscribers = body;
 
-               if ( body.indexOf("Not Found") > -1) {
+               if ( body !== undefined && body.indexOf("Not Found") > -1) {
                   err = "Mongrel2 handler settings Incorrect. Please check configuration"
                }
                if ( err ) {
