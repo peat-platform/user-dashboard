@@ -36,7 +36,7 @@ module.exports = function(cmd_args) {
 
       auth.createSession(req.body.username, req.body.password, function (err, body) {
         if ( err ) {
-          console.error(err);
+          console.error("Create Session Error: " + err);
           res.redirect(400, '/');
           return;
         }

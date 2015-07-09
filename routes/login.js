@@ -22,7 +22,7 @@ module.exports = function (cmd_args) {
 
       auth.createSession(req.body.username, req.body.password, function (err, body) {
          if ( err ) {
-            console.error(err);
+            console.error("Login Error: " +err);
             res.render('login', { 'error': 'Login failure, please try again.' });
             return;
          }
