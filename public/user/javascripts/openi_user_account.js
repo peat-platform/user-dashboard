@@ -14,9 +14,9 @@ $(document).ready(function(){
 //
 function onClickRegisterButton() {
 
-   var username        = $(" #_openi_username").val();
-   var password        = $(" #_openi_passwd").val();
-   var confirmPassword = $(" #_openi_conf_passwd").val();
+   var username        = $(" #_peat_username").val();
+   var password        = $(" #_peat_passwd").val();
+   var confirmPassword = $(" #_peat_conf_passwd").val();
    var validated       = true;
    var error           = null;
 
@@ -48,7 +48,7 @@ function onClickRegisterButton() {
                   validated = false;
                }
                else {
-                  if ( !$("#accept-openi").is(':checked') ) {
+                  if ( !$("#accept-peat").is(':checked') ) {
                      error=("You must accept PEAT's terms and conditions");
                      validated = false
                   }

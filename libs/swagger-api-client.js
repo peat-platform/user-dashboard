@@ -2,7 +2,7 @@
 *												 *
 *	This script is just a test script to dyn-	 *
 *	amicly fetch and access the API endpoints	 *
-*	of the OPENi project. But without CORS on 	 *
+*	of the PEAT project. But without CORS on 	 *
 *	API server-side this script has no access.	 *
 *												 *
 *************************************************/

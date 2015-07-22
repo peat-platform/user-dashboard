@@ -59,7 +59,7 @@ function readClients(session, cb)
 
 function createSession(username, password, cb)
 {
-	crud('POST', base + '/sessions', {'username': username, 'password': password}, null, cb);
+	crud('POST', base + '/sessions', {'username': username, 'password': password, 'scope' : 'user', 'client' : 'user-dashboard'}, null, cb);
 }
 
 function deleteSession(session, cb)

@@ -8,10 +8,11 @@ module.exports = function(config) {
    /* GET home page. */
    router.get('/', function (req, res) {
 
-      jwt.verify(req.signedCookies.session, config.trusted_public_key, function (err, decoded) {
+      jwt.verify(req.signedCookies.session, config.auth_server_public_key, function (err, decoded) {
 
          if (err) {
-            res.render('login')
+            conosle.log("Index Error: " +err);
+            res.render('/user/login')
          }
          else {
             res.render('index', {
@@ -26,4 +27,4 @@ module.exports = function(config) {
    });
 
    return router
-}
+};

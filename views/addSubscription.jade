@@ -1,33 +1,33 @@
 //   Created by dconway on 20/03/15.
 
-extends main-container
-block header
-    include ./header-navbar.jade
+extends new_layout
 block content
-    div.row.clearfix
-        br
-        div.col-md-6.column
-            div.SubscriptionForm
-                p Cloudlet Id:
-                input#cloudletID(type="text")
-                p Type Id:
-                input#typeID(type="text")
-                p Object Id:
-                input#objectID(type="text")
-                p Notification Type
-                select#notifType
-                    option(key="sse") Server-Sent Event
-                    option(key="email") Email
-                    option(key="sms") SMS Text Message
-                    option(key="gcm") Android Notification
-                p.endpoint.hidden#endpointLabel
-                input.endpoint.hidden#endpoint(type="text")
-            button.btn#buildSub Build Subscription
+    div.panel.panel-default
+        div.panel-body
+            div.row.clearfix
+                br
+                div.col-md-4.column
+                    div.SubscriptionForm
+                        p Cloudlet Id:
+                        input#cloudletID(type="text",placeholder="#{cloudlet}")
+                        p Type Id:
+                        input#typeID(type="text")
+                        p Object Id:
+                        input#objectID(type="text",placeholder="Optional")
+                        p Notification Type
+                        select#notifType
+                            option(key="sse") Server-Sent Event
+                            option(key="email") Email
+                            option(key="sms") SMS Text Message
+                            option(key="gcm") Android Notification
+                        p.endpoint.hidden#endpointLabel
+                        input.endpoint.hidden#endpoint(type="text")
+                    button.btn#buildSub Build Subscription
 
-        div.col-md-6.column
-            b Subscription Object:
-                pre#subObject
-            button.btn#createSub Create Subscription
+                div.col-md-8.column
+                    b Subscription Object:
+                        pre#subObject
+                    button.btn#createSub Create Subscription
 
     div#dialog-modal(title="Basic modal dialog",style="display: none;")
     input.hidden(id="session", name="session", value="#{session}")
