@@ -150,9 +150,12 @@ var display_object_function = function(){
          $('#data_table tbody').html('')
          $('#data_table_meta tbody').html('')
          $('#data_table_perms tbody').html('')
-
          for ( var i in data['@data']){
-            $('#data_table > tbody:last').append('<tr><td>' + type_mapping[i] +'</td><td>'+ data['@data'][i] +'</td></tr>');
+            var value = JSON.stringify(data['@data'][i])
+            if (value.indexOf('"') === 0 ){
+               value = value.substring(1,value.length-1)
+            }
+            $('#data_table > tbody:last').append('<tr><td>' + type_mapping[i] +'</td><td>'+ value +'</td></tr>');
          }
          $('#data_table').bootstrapTable()
 
