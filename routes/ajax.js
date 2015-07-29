@@ -48,7 +48,7 @@ var getDevName = function(cid, users){
    }
 
    return ""
-}
+};
 
 
 var getAppName = function(id, apps){
@@ -60,7 +60,7 @@ var getAppName = function(id, apps){
    }
 
    return ""
-}
+};
 
 
 var getAppCloudlet = function(id, apps){
@@ -72,7 +72,7 @@ var getAppCloudlet = function(id, apps){
    }
 
    return ""
-}
+};
 
 
 var getAppPermsStr = function(id, perms){
@@ -80,20 +80,20 @@ var getAppPermsStr = function(id, perms){
    for (var i in perms){
 
       if (i === id){
-         var vals = perms[i]
-         var tmp  = []
+         var vals = perms[i];
+         var tmp  = [];
          for (var j in vals){
             if (vals[j] === true){
                tmp.push(j)
             }
          }
-         return tmp.join(", ")
+         return tmp.join(", ");
          break;
       }
    }
 
    return ""
-}
+};
 
 
 var dateToHRF = function(dateStr){
@@ -103,12 +103,12 @@ var dateToHRF = function(dateStr){
    //      return apps[i].name
    //   }
    //}
-   var dateStr   = new Date(dateStr).toLocaleString()
+   var dateStr   = new Date(dateStr).toLocaleString();
 
-   return dateStr.substring(0, dateStr.lastIndexOf(":"))
+   return dateStr.substring(0, dateStr.lastIndexOf(":"));
 
    return dateStr
-}
+};
 
 
 module.exports = function (cmd_args) {
@@ -116,7 +116,6 @@ module.exports = function (cmd_args) {
    var user_dash_public_key = cmd_args.auth_server_public_key.replace(/'/g, "").replace(/"/g, '').replace(/\\n/g, "\n");
 
    return function (req, res, next) {
-
       jwt.verify(req.signedCookies.session, user_dash_public_key, function (err, decoded) {
 
          if ( err || "session" !== decoded["peat-token-type"] || "user" !== decoded["scope"] ) {
@@ -151,12 +150,12 @@ module.exports = function (cmd_args) {
                         //console.log("sql",    sql)
                         //console.log("result", result)
 
-                        var perms = result[0].perms
+                        var perms = result[0].perms;
 
                         //console.log("perms", perms)
 
-                        var c_ids   = []
-                        var app_ids = []
+                        var c_ids   = [];
+                        var app_ids = [];
 
                         for (var i in perms){
                            if (0 === i.indexOf("created_by")){
@@ -198,21 +197,21 @@ module.exports = function (cmd_args) {
                                        { key : "Create in Application:", value : getAppName(perms.created_by_app, client_result)},
                                        { key : "Create Date:",           value : dateToHRF(obj._date_created)},
                                        { key : "Last Modified:",         value : dateToHRF(obj._date_modified)}
-                                    ]
+                                    ];
 
 
                                     for (var i in client_result){
-                                       var c = client_result[i]
+                                       var c = client_result[i];
                                        if (c.isSE){
-                                          var index = app_ids.indexOf(c.id)
+                                          var index = app_ids.indexOf(c.id);
                                           delete app_ids[index]
                                        }
                                     }
 
-                                    var perms_data = []
+                                    var perms_data = [];
 
                                     for (var i in app_ids){
-                                       var appId = app_ids[i]
+                                       var appId = app_ids[i];
                                        perms_data.push({
                                           key   : getAppName(appId, client_result),
                                           value : getAppPermsStr(appId, perms),
