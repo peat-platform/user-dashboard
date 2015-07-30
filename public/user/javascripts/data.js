@@ -47,7 +47,7 @@ var idToStr = function(id){
    var dateStr   = date.toLocaleString();
 
    return "Entry: " + dateStr.substring(0, dateStr.length -3)
-}
+};
 
 
 var updateEntryIds = function(){
@@ -116,6 +116,31 @@ var getEditButtonHTML = function(obj_id, app_cid, app_id, perms){
    '" >Modify</button></div>'
 };
 
+var processJSONData= function(data, modal){
+   var json;
+   if(typeof data  === "object") {
+      json = data
+   } else {
+      json = JSON.parse(data);
+   }
+   var limit = 100;
+
+   if(modal === true){
+      var limit = 500;
+   }
+
+   for(var i in json){
+
+      if( typeof json[i] === "object" && json[i].length >= limit){
+         var html = '<a class=jsondata id=object'+i+' href=# > View More </a> <span id=object'+i+'span style=display:none; >'+JSON.stringify(json[i])+'</span>';
+
+         json[i] = html //"object"
+      }
+   }
+   //return data
+   return JSON.stringify(json,null," ")
+};
+
 
 var display_object_function = function(){
 
@@ -144,9 +169,6 @@ var display_object_function = function(){
          var type         = typeCache[data['@type']];
          var type_mapping = typeMemberToContext(type);
 
-         console.log(type)
-         console.log(type_mapping)
-
          $("#displayedEntryTitle").html(type['@reference'] + " (" + idToStr(id) + ")");
          $("#displayedEntryTitle").attr('name', id);
 
@@ -157,6 +179,9 @@ var display_object_function = function(){
             var value = JSON.stringify(data['@data'][i]);
             if (value.indexOf('"') === 0 ){
                value = value.substring(1,value.length-1)
+            }
+            else {
+               value = processJSONData(value)
             }
             $('#data_table > tbody:last').append('<tr><td>' + type_mapping[i] +'</td><td>'+ value +'</td></tr>');
          }
@@ -219,6 +244,18 @@ var display_object_function = function(){
             $('#modifyModal').modal('show');
 
          })
+
+         $('.jsondata').click(function(data, fn){
+            var id = "#"+this.id+"span";
+            var text = $(id).text().replace(/\\"/g,'"' );
+            var jsondata = JSON.parse(text);
+
+            console.log(Array.isArray(jsondata))
+
+            $('#dataModal').find('.modal-title').text('Viewing object for `'+this.id.replace("object","")+"` key.");
+            $('#dataModal').find('.modal-body').html("<pre>"+processJSONData(jsondata)+"</pre>");
+            $('#dataModal').modal('show');
+         });
       },
       error: function (data) {
          console.log(data)
@@ -237,7 +274,7 @@ $("#deleteEntryButton").click(function(){
       "user experience with that application. Are you sure you want to delete this Data Entry?");
    $('#exampleModal').find('.okay-button').html("Delete");
    $('#exampleModal').modal('show');
-})
+});
 
 
 $('#modifyModal .okay-button').click(function() {
@@ -306,3 +343,4 @@ $('#exampleModal .okay-button').click(function() {
 
    $('#exampleModal').modal('hide');
 });
+
