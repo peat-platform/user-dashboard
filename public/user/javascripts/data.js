@@ -103,7 +103,7 @@ var typeMemberToContext = function(type){
    var mapping = {};
    for (var i = 0; i < type['@context'].length; i++){
       var ce = type['@context'][i];
-      mapping[ce['@property_name']] = ce['@context_id']
+      mapping[ce['@property_name']] = ce['@description']
    }
    return mapping;
 };

@@ -61,7 +61,7 @@ var objToHTML = function(val){
          html += objToHTML(val["@context"][j]['@type'])
       }
       else{
-         html += "<li>" + val["@context"][j]['@context_id'] + "</li>"
+         html += "<li>" + val["@context"][j]['@description'] + "</li>"
       }
    }
    html += '</ul>'
@@ -97,7 +97,7 @@ var allSubTypesInProcessed = function(type, processed){
 var getProps = function(type){
    var props = []
    for (var i = 0; i < type['@context'].length; i++){
-      props.push(type['@context'][i]['@context_id'])
+      props.push(type['@context'][i]['@description'])
    }
    return props;
 }
@@ -171,12 +171,12 @@ var extractMembers2 = function(type){
       var entry = type['@context'][c];
 
       if (isTypeId(entry['@type'])){
-         var n = entry['@context_id']
+         var n = entry['@description']
          var o = { n : ["a", "b", "c"] }
          arr.push(o)
       }
       else{
-         arr.push(entry['@context_id'])
+         arr.push(entry['@description'])
       }
    }
 
@@ -188,7 +188,7 @@ var extractMembers = function(type){
    var arr = []
    for(var c in type['@context']){
       var entry = type['@context'][c];
-      arr.push(entry['@context_id'])
+      arr.push(entry['@description'])
    }
 
    return arr;
