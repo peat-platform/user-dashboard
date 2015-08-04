@@ -250,10 +250,22 @@ var display_object_function = function(){
             var text = $(id).text().replace(/\\"/g,'"' );
             var jsondata = JSON.parse(text);
 
-            console.log(Array.isArray(jsondata))
 
             $('#dataModal').find('.modal-title').text('Viewing object for `'+this.id.replace("object","")+"` key.");
-            $('#dataModal').find('.modal-body').html("<pre>"+processJSONData(jsondata)+"</pre>");
+            $('#dataModal').find('.modal-body').append("<pre>"+processJSONData(jsondata)+"</pre>");
+            //for(var i in jsondata) {
+               //console.log(jsondata[i])
+               //$('#dataModal').find('#expanded_data_table > tbody:last').append("<tr><td><pre>" + processJSONData(jsondata[i]) + "</pre></td></tr>");
+            //}
+
+            $('#dataModal table').addClass("fixed-table-pagination");
+            $('#dataModal table').bootstrapTable({
+               //data : jsondata,
+               pagination: true
+            });
+            //$('#dataModal table').initPagination();
+            //$('#dataModal table').load(jsondata);
+
             $('#dataModal').modal('show');
          });
       },
